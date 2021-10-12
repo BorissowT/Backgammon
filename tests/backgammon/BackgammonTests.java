@@ -11,6 +11,8 @@ public class BackgammonTests {
         return false;
     }
 
+    //TODO dice test
+
     @Test
     public void start_first_player_dice_test(){
         Backgammon BGobject = new BGImpl();

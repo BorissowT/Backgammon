@@ -17,6 +17,8 @@ public class BGImpl implements Backgammon {
          }
     }
 
+
+
     private void replace_stones(PositionImpl place){
          int place_id = place.getId();
          switch (place_id) {
@@ -46,12 +48,17 @@ public class BGImpl implements Backgammon {
 
     @Override
     public int start() {
+        return 2;
+    }
+
+    @Override
+    public int dice() {
         return 0;
     }
 
     @Override
     public int set(int stone, int position) {
-        return 0;
+        return 2;
     }
 
     @Override

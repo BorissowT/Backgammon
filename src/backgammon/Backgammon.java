@@ -15,6 +15,7 @@ public interface Backgammon  {
     StoneImpl[] all_stones = new StoneImpl[30];
 
     int start();
+    int dice();
     int set(int stone, int position);
     void give_up();
 }
