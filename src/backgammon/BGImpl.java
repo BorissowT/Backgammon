@@ -7,13 +7,41 @@ public class BGImpl implements Backgammon {
      * give_up() - to close the app
      */
      BGImpl(){
-        for(int i=0;i<=24;i++){
-            all_positions[i] = new PositionImpl();
-        }
-        for(int i=0;i<30;i++){
+         for(int i=0;i<30;i++){
              all_stones[i] = new StoneImpl();
          }
+         for(int i=0;i<=24;i++){
+            PositionImpl position = new PositionImpl();
+            replace_stones(position);
+            all_positions[i] = position;
+         }
+    }
 
+    private void replace_stones(PositionImpl place){
+         int place_id = place.getId();
+         switch (place_id) {
+            case 1:
+                //TODO replace 2 white stones
+                break;
+            case 12:
+                //TODO replace 5 white stones
+                break;
+            case 17:
+                //TODO replace 2 white stones
+                break;
+            case 19:
+                //TODO replace 2 white stones
+                break;
+            case 6:
+                //TODO replace 5 black stones
+                break;
+            case 13:
+                //TODO replace 5 black stones
+                break;
+            case 24:
+                //TODO replace 2 black stones
+                break;
+         }
     }
 
     @Override

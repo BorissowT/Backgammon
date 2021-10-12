@@ -13,9 +13,9 @@ public class StoneImpl {
         this.id = allStones.size();
         // TODO change to enum
         if(allStones.size()>15)
-            this.color = "BLACK";
-        else
             this.color = "WHITE";
+        else
+            this.color = "BLACK";
         allStones.add(this);
     }
 
@@ -25,5 +25,13 @@ public class StoneImpl {
 
     public static ArrayList<StoneImpl> getAllStones() {
         return allStones;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public PositionImpl getPosition() {
+        return position;
     }
 }
