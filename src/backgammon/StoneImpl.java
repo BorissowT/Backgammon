@@ -1,33 +1,28 @@
 package backgammon;
 
-import java.util.ArrayList;
-
 public class StoneImpl {
-    private static ArrayList<StoneImpl> allStones = new ArrayList<StoneImpl>();
+
     private int id;
     //TODO change to enum
-    private String color;
+    private Color color;
     private PositionImpl position;
 
-    StoneImpl(){
-        this.id = allStones.size();
+    StoneImpl(BGImpl GameObject){
+        this.id = GameObject.getAllStones().size();
         // TODO change to enum
-        if(allStones.size()>15)
-            this.color = "WHITE";
+        if(this.id>15)
+            //this.color = "WHITE";
+            this.color = color.WHITE;
         else
-            this.color = "BLACK";
-        allStones.add(this);
+            this.color = color.BLACK;
+        GameObject.setStone(this);
     }
 
     public int getId() {
         return id;
     }
 
-    public static ArrayList<StoneImpl> getAllStones() {
-        return allStones;
-    }
-
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 

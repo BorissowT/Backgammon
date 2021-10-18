@@ -4,20 +4,14 @@ import java.util.ArrayList;
 
 public class PositionImpl {
 
-    private static ArrayList<PositionImpl> allPositions = new ArrayList<PositionImpl>();
     private final int id;
     private ArrayList<StoneImpl> stones = new ArrayList<StoneImpl>();
+    private Color color;
 
-    private enum color{
-        BLACK,
-        WHITE,
-        NONE
-    };
-
-    PositionImpl(){
-        this.id = allPositions.size();
-        allPositions.add(this);
-       //this.color = color.NONE;
+    PositionImpl(BGImpl GameObject){
+        this.id = GameObject.getAllPositions().size();
+        GameObject.setPosition(this);
+        this.color = color.NONE;
     }
 
     public ArrayList<StoneImpl> getStones() {
@@ -35,10 +29,6 @@ public class PositionImpl {
 
     private void removeStone(StoneImpl stone){
         this.stones.remove(stone);
-    }
-
-    public static ArrayList<PositionImpl> getAllPositions() {
-        return allPositions;
     }
 
     public int getId() {

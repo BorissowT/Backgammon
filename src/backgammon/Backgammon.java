@@ -11,8 +11,7 @@ public interface Backgammon  {
         NONE,
     }
 
-    PositionImpl[] all_positions = new PositionImpl[25];
-    StoneImpl[] all_stones = new StoneImpl[30];
+
 
     int start();
     int dice();

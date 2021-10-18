@@ -11,7 +11,19 @@ public class BackgammonTests {
         return false;
     }
 
-    //TODO dice test
+    private boolean if_game_dice_in_range(int result) {
+        if (result>=2&&result<=12)
+            return true;
+        return false;
+    }
+
+    @Test
+    public void dice_test(){
+        Backgammon BGobject = new BGImpl();
+        for (int i=0; i<10;i++){
+            Assert.assertTrue(if_game_dice_in_range(BGobject.dice()));
+        }
+    }
 
     @Test
     public void start_first_player_dice_test(){
@@ -25,22 +37,17 @@ public class BackgammonTests {
     public void allowed_positions_test(){
         Backgammon BGobject = new BGImpl();
         for (int position=0; position<=24;position++){
-            for (int stone=0; stone<=16;stone++){
+            for (int stone=0; stone<=29;stone++){
                 Assert.assertEquals(1,BGobject.set(stone,position));
             }
         }
     }
 
     @Test
-    public void test(){
+    public void position_1_stones_amount_test(){
         Backgammon BGobject = new BGImpl();
-        PositionImpl pos = BGobject.all_positions[0];
-        StoneImpl st1 = new StoneImpl();
-        StoneImpl st2 = new StoneImpl();
-        pos.setStone(st1);
-        pos.setStone(st2);
-        pos.getStones().remove(st2);
-        System.out.println(pos.getStones());
+        //PositionImpl pos = BGobject.get;
+        //Assert.assertEquals(2,pos.getStones().size());
     }
 
 }
