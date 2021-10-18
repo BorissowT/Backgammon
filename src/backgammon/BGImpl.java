@@ -5,11 +5,8 @@ import java.util.ArrayList;
 public class BGImpl implements Backgammon {
     private ArrayList<StoneImpl> allStones = new ArrayList<StoneImpl>();
     private ArrayList<PositionImpl> allPositions = new ArrayList<PositionImpl>();
-    /**
-     * start() - to dice the first player
-     * set() - to place a stone
-     * give_up() - to close the app
-     */
+    private boolean active_player;
+
      BGImpl(){
          for(int i=0;i<30;i++){
              this.setStone(new StoneImpl(this));

@@ -34,7 +34,7 @@ public class BackgammonTests {
     }
 
     @Test
-    public void allowed_positions_test(){
+    public void allowed_positions_test() {
         Backgammon BGobject = new BGImpl();
         for (int position=0; position<=24;position++){
             for (int stone=0; stone<=29;stone++){
@@ -42,5 +42,27 @@ public class BackgammonTests {
             }
         }
     }
+
+    @Test()
+    public void not_allowed_positions_test1(){
+        Backgammon BGobject = new BGImpl();
+        for (int position=24; position<=50;position++){
+            for (int stone=0; stone<=29;stone++){
+                Assert.assertEquals(0,BGobject.set(stone,position));
+            }
+        }
+    }
+
+    @Test()
+    public void not_allowed_positions_test2(){
+        Backgammon BGobject = new BGImpl();
+        for (int position=-50; position<=-1;position++){
+            for (int stone=0; stone<=29;stone++){
+                Assert.assertEquals(0,BGobject.set(stone,position));
+            }
+        }
+    }
+
+
 
 }

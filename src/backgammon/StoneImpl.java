@@ -3,7 +3,6 @@ package backgammon;
 public class StoneImpl {
 
     private int id;
-    //TODO change to enum
     private Color color;
     private PositionImpl position;
 
