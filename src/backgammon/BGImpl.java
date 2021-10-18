@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public class BGImpl implements Backgammon {
     private ArrayList<StoneImpl> allStones = new ArrayList<StoneImpl>();
     private ArrayList<PositionImpl> allPositions = new ArrayList<PositionImpl>();
-    private boolean active_player;
+    private Color active_player;
+
+    private int points;
 
      BGImpl(){
          for(int i=0;i<30;i++){
@@ -105,4 +107,5 @@ public class BGImpl implements Backgammon {
     public ArrayList<PositionImpl> getAllPositions() {
         return allPositions;
     }
+
 }
