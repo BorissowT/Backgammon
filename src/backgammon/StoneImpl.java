@@ -9,13 +9,10 @@ public class StoneImpl {
 
     StoneImpl(BGImpl GameObject){
         this.id = GameObject.getAllStones().size();
-        // TODO change to enum
         if(this.id>15)
-            //this.color = "WHITE";
             this.color = color.WHITE;
         else
             this.color = color.BLACK;
-        GameObject.setStone(this);
     }
 
     public int getId() {

@@ -10,7 +10,6 @@ public class PositionImpl {
 
     PositionImpl(BGImpl GameObject){
         this.id = GameObject.getAllPositions().size();
-        GameObject.setPosition(this);
         this.color = color.NONE;
     }
 

@@ -12,12 +12,12 @@ public class BGImpl implements Backgammon {
      */
      BGImpl(){
          for(int i=0;i<30;i++){
-             allStones.add(new StoneImpl(this));
+             this.setStone(new StoneImpl(this));
          }
          for(int i=0;i<=24;i++){
             PositionImpl position = new PositionImpl(this);
             replace_stones(position);
-            allPositions.add(position);
+            this.setPosition(position);
          }
     }
 
@@ -25,25 +25,50 @@ public class BGImpl implements Backgammon {
          int place_id = place.getId();
          switch (place_id) {
             case 1:
-                //2
+                place.setStone(this.getAllStones().get(0));
+                place.setStone(this.getAllStones().get(1));
                 break;
             case 12:
-                //5
+                place.setStone(this.getAllStones().get(2));
+                place.setStone(this.getAllStones().get(3));
+                place.setStone(this.getAllStones().get(4));
+                place.setStone(this.getAllStones().get(5));
+                place.setStone(this.getAllStones().get(6));
                 break;
             case 17:
-                //3
+                place.setStone(this.getAllStones().get(7));
+                place.setStone(this.getAllStones().get(8));
+                place.setStone(this.getAllStones().get(9));
                 break;
             case 19:
-               //5
+                place.setStone(this.getAllStones().get(10));
+                place.setStone(this.getAllStones().get(11));
+                place.setStone(this.getAllStones().get(12));
+                place.setStone(this.getAllStones().get(13));
+                place.setStone(this.getAllStones().get(14));
                 break;
             case 6:
-                //TODO replace 5 black stones
+                place.setStone(this.getAllStones().get(15));
+                place.setStone(this.getAllStones().get(16));
+                place.setStone(this.getAllStones().get(17));
+                place.setStone(this.getAllStones().get(18));
+                place.setStone(this.getAllStones().get(19));
+                break;
+            case 8:
+                place.setStone(this.getAllStones().get(20));
+                place.setStone(this.getAllStones().get(21));
+                place.setStone(this.getAllStones().get(22));
                 break;
             case 13:
-                //TODO replace 5 black stones
+                place.setStone(this.getAllStones().get(23));
+                place.setStone(this.getAllStones().get(24));
+                place.setStone(this.getAllStones().get(25));
+                place.setStone(this.getAllStones().get(26));
+                place.setStone(this.getAllStones().get(27));
                 break;
             case 24:
-                //TODO replace 2 black stones
+                place.setStone(this.getAllStones().get(28));
+                place.setStone(this.getAllStones().get(29));
                 break;
          }
     }

@@ -43,11 +43,4 @@ public class BackgammonTests {
         }
     }
 
-    @Test
-    public void position_1_stones_amount_test(){
-        Backgammon BGobject = new BGImpl();
-        //PositionImpl pos = BGobject.get;
-        //Assert.assertEquals(2,pos.getStones().size());
-    }
-
 }
