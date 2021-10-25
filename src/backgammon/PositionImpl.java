@@ -17,20 +17,27 @@ public class PositionImpl {
         return stones;
     }
 
-    public void setStone(StoneImpl stone) {
+    public void setStone(StoneImpl new_stone) throws BackgammonException{
         //TODO
         // calculate color of the position
-        // throw error if not possible to replace a stone
+        if(this.getColor()!=new_stone.getColor() && this.getColor()!=Color.NONE)
+            throw new BackgammonException("Not allowed to move the stone");
+        //TODO
         // change status of removed stone after removal of enemy stone
         // change position of moved stone
-        this.stones.add(stone);
+        this.stones.add(new_stone);
     }
 
     private void removeStone(StoneImpl stone){
+        //TODO calculate color of the position
         this.stones.remove(stone);
     }
 
     public int getId() {
         return id;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

@@ -20,7 +20,7 @@ public class BackgammonTests {
     }
 
     @Test
-    public void dice_test(){
+    public void dice_test() throws BackgammonException {
         Backgammon BGobject = new BGImpl();
         for (int i=0; i<10;i++){
             Assert.assertTrue(if_game_dice_in_range(BGobject.dice().points)) ;
@@ -28,7 +28,7 @@ public class BackgammonTests {
     }
 
     @Test
-    public void start_first_player_dice_test(){
+    public void start_first_player_dice_test() throws BackgammonException {
         Backgammon BGobject = new BGImpl();
         for (int i=0; i<10;i++){
             Assert.assertTrue(if_start_dice_is_black_or_white(BGobject.start()));
@@ -36,7 +36,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = BackgammonException.class)
-    public void move_to_not_allowed_positions_test_1(){
+    public void move_to_not_allowed_positions_test_1() throws BackgammonException {
         Backgammon BGobject = new BGImpl();
         for (int position=24; position<=50;position++){
             for (int stone=0; stone<=29;stone++){
@@ -46,7 +46,7 @@ public class BackgammonTests {
     }
 
     @Test
-    public void move_to_not_allowed_positions_test_2(){
+    public void move_to_not_allowed_positions_test_2() throws BackgammonException {
         Backgammon BGobject = new BGImpl();
         for (int position=-50; position<=-1;position++){
             for (int stone=0; stone<=29;stone++){
@@ -56,7 +56,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = BackgammonException.class)
-    public void move_to_position(){
+    public void move_to_position() throws BackgammonException {
         Backgammon BGobject = new BGImpl();
         Color player = BGobject.start();
         int points = BGobject.dice().points;

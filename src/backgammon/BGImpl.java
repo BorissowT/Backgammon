@@ -10,7 +10,7 @@ public class BGImpl implements Backgammon {
 
     private int points;
 
-     BGImpl(){
+     BGImpl() throws BackgammonException {
          for(int i=0;i<30;i++){
              this.setStone(new StoneImpl(this));
          }
@@ -21,54 +21,54 @@ public class BGImpl implements Backgammon {
          }
     }
 
-    private void replace_stones(PositionImpl place){
-         int place_id = place.getId();
+    private void replace_stones(PositionImpl position) throws BackgammonException {
+         int place_id = position.getId();
          switch (place_id) {
             case 1:
-                place.setStone(this.getAllStones().get(0));
-                place.setStone(this.getAllStones().get(1));
+                position.setStone(this.getAllStones().get(0));
+                position.setStone(this.getAllStones().get(1));
                 break;
             case 12:
-                place.setStone(this.getAllStones().get(2));
-                place.setStone(this.getAllStones().get(3));
-                place.setStone(this.getAllStones().get(4));
-                place.setStone(this.getAllStones().get(5));
-                place.setStone(this.getAllStones().get(6));
+                position.setStone(this.getAllStones().get(2));
+                position.setStone(this.getAllStones().get(3));
+                position.setStone(this.getAllStones().get(4));
+                position.setStone(this.getAllStones().get(5));
+                position.setStone(this.getAllStones().get(6));
                 break;
             case 17:
-                place.setStone(this.getAllStones().get(7));
-                place.setStone(this.getAllStones().get(8));
-                place.setStone(this.getAllStones().get(9));
+                position.setStone(this.getAllStones().get(7));
+                position.setStone(this.getAllStones().get(8));
+                position.setStone(this.getAllStones().get(9));
                 break;
             case 19:
-                place.setStone(this.getAllStones().get(10));
-                place.setStone(this.getAllStones().get(11));
-                place.setStone(this.getAllStones().get(12));
-                place.setStone(this.getAllStones().get(13));
-                place.setStone(this.getAllStones().get(14));
+                position.setStone(this.getAllStones().get(10));
+                position.setStone(this.getAllStones().get(11));
+                position.setStone(this.getAllStones().get(12));
+                position.setStone(this.getAllStones().get(13));
+                position.setStone(this.getAllStones().get(14));
                 break;
             case 6:
-                place.setStone(this.getAllStones().get(15));
-                place.setStone(this.getAllStones().get(16));
-                place.setStone(this.getAllStones().get(17));
-                place.setStone(this.getAllStones().get(18));
-                place.setStone(this.getAllStones().get(19));
+                position.setStone(this.getAllStones().get(15));
+                position.setStone(this.getAllStones().get(16));
+                position.setStone(this.getAllStones().get(17));
+                position.setStone(this.getAllStones().get(18));
+                position.setStone(this.getAllStones().get(19));
                 break;
             case 8:
-                place.setStone(this.getAllStones().get(20));
-                place.setStone(this.getAllStones().get(21));
-                place.setStone(this.getAllStones().get(22));
+                position.setStone(this.getAllStones().get(20));
+                position.setStone(this.getAllStones().get(21));
+                position.setStone(this.getAllStones().get(22));
                 break;
             case 13:
-                place.setStone(this.getAllStones().get(23));
-                place.setStone(this.getAllStones().get(24));
-                place.setStone(this.getAllStones().get(25));
-                place.setStone(this.getAllStones().get(26));
-                place.setStone(this.getAllStones().get(27));
+                position.setStone(this.getAllStones().get(23));
+                position.setStone(this.getAllStones().get(24));
+                position.setStone(this.getAllStones().get(25));
+                position.setStone(this.getAllStones().get(26));
+                position.setStone(this.getAllStones().get(27));
                 break;
             case 24:
-                place.setStone(this.getAllStones().get(28));
-                place.setStone(this.getAllStones().get(29));
+                position.setStone(this.getAllStones().get(28));
+                position.setStone(this.getAllStones().get(29));
                 break;
          }
     }
@@ -89,6 +89,7 @@ public class BGImpl implements Backgammon {
 
     @Override
     public boolean set(int stone, int position){
+
         return true;
     }
 

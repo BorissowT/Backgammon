@@ -14,6 +14,10 @@ public class StoneImpl {
             this.color = color.BLACK;
     }
 
+    public void setPosition(PositionImpl position) {
+        this.position = position;
+    }
+
     public int getId() {
         return id;
     }
