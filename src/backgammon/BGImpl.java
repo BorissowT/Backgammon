@@ -1,6 +1,7 @@
 package backgammon;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BGImpl implements Backgammon {
     private ArrayList<StoneImpl> allStones = new ArrayList<StoneImpl>();
@@ -73,18 +74,22 @@ public class BGImpl implements Backgammon {
     }
 
     @Override
-    public int start() {
-        return 2;
+    public Color start() {
+        return Color.NONE;
     }
 
     @Override
-    public int dice() {
-        return 0;
+    public Dice dice() {
+
+        int first_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+        int second_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
+        Dice result = new Dice(first_dice, second_dice);
+         return result;
     }
 
     @Override
-    public int set(int stone, int position) {
-        return 2;
+    public boolean set(int stone, int position){
+        return true;
     }
 
     @Override
