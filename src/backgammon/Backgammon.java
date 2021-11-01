@@ -1,6 +1,8 @@
 package backgammon;
 
 
+import backgammon.Exceptions.NotEnoughPointsException;
+import backgammon.Exceptions.WrongPositionException;
 import backgammon.Implementation.Color;
 import backgammon.Implementation.Dice;
 
@@ -27,7 +29,7 @@ public interface Backgammon  {
      * @param position id of position to move
      * @return 0 if ok. throws Exception.
      */
-    boolean set(int stone, int position);
+    boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException;
 
     /***
      * stop the game

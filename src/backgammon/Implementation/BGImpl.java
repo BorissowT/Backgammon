@@ -1,6 +1,7 @@
 package backgammon.Implementation;
 
 import backgammon.*;
+import backgammon.Exceptions.NotEnoughPointsException;
 import backgammon.Exceptions.WrongPositionException;
 
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class BGImpl implements Backgammon {
     }
 
     @Override
-    public boolean set(int stone, int position){
+    public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException {
 
         return true;
     }
