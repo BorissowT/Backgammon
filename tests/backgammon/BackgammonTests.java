@@ -26,7 +26,7 @@ public class BackgammonTests {
     public void dice_test() throws BackgammonException {
         Backgammon BGobject = new BGImpl();
         for (int i=0; i<10;i++){
-            Assert.assertTrue(if_game_dice_in_range(BGobject.dice().points)) ;
+            Assert.assertTrue(if_game_dice_in_range(BGobject.dice().getPoints())) ;
         }
     }
 
@@ -62,7 +62,7 @@ public class BackgammonTests {
     public void move_to_position() throws BackgammonException {
         Backgammon BGobject = new BGImpl();
         Color player = BGobject.start();
-        int points = BGobject.dice().points;
+        int points = BGobject.dice().getPoints();
         if(points >= 5){
             move_to_enemy_position(BGobject, player);
         }

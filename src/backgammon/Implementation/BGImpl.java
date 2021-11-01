@@ -13,7 +13,7 @@ public class BGImpl implements Backgammon {
 
     private int points;
 
-     BGImpl() throws BackgammonException {
+    public BGImpl() throws BackgammonException {
          for(int i=0;i<30;i++){
              this.setStone(new StoneImpl(this));
          }
@@ -117,4 +117,8 @@ public class BGImpl implements Backgammon {
         return allPositions;
     }
 
+
+    public int getPoints() {
+        return points;
+    }
 }
