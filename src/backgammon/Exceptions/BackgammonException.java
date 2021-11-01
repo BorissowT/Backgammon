@@ -1,4 +1,4 @@
-package backgammon;
+package backgammon.Exceptions;
 
 public class BackgammonException extends Exception{
 	public BackgammonException() { super(); }

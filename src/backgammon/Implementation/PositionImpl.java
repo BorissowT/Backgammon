@@ -1,4 +1,6 @@
-package backgammon;
+package backgammon.Implementation;
+
+import backgammon.Exceptions.BackgammonException;
 
 import java.util.ArrayList;
 
@@ -17,7 +19,7 @@ public class PositionImpl {
         return stones;
     }
 
-    public void setStone(StoneImpl new_stone) throws BackgammonException{
+    public void setStone(StoneImpl new_stone) throws BackgammonException {
         //TODO
         // calculate color of the position
         if(this.getColor()!=new_stone.getColor() && this.getColor()!=Color.NONE)

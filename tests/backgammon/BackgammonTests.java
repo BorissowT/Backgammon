@@ -1,5 +1,8 @@
 package backgammon;
 
+import backgammon.Exceptions.BackgammonException;
+import backgammon.Implementation.BGImpl;
+import backgammon.Implementation.Color;
 import org.junit.Assert;
 import org.junit.Test;
 

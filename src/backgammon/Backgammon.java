@@ -1,6 +1,9 @@
 package backgammon;
 
 
+import backgammon.Implementation.Color;
+import backgammon.Implementation.Dice;
+
 public interface Backgammon  {
 
 //TODO

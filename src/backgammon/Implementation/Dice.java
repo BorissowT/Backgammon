@@ -1,4 +1,4 @@
-package backgammon;
+package backgammon.Implementation;
 
 public class Dice {
 	boolean if_double = false;

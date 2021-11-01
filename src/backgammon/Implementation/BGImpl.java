@@ -1,4 +1,7 @@
-package backgammon;
+package backgammon.Implementation;
+
+import backgammon.*;
+import backgammon.Exceptions.BackgammonException;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
