@@ -1,6 +1,6 @@
 package backgammon.Implementation;
 
-import backgammon.Exceptions.BackgammonException;
+import backgammon.Exceptions.WrongPositionException;
 
 import java.util.ArrayList;
 
@@ -19,11 +19,11 @@ public class PositionImpl {
         return stones;
     }
 
-    public void setStone(StoneImpl new_stone) throws BackgammonException {
+    public void setStone(StoneImpl new_stone) throws WrongPositionException {
         //TODO
         // calculate color of the position
         if(this.getColor()!=new_stone.getColor() && this.getColor()!=Color.NONE)
-            throw new BackgammonException("Not allowed to move the stone");
+            throw new WrongPositionException("Not allowed to move the stone");
         //TODO
         // change status of removed stone after removal of enemy stone
         // change position of moved stone

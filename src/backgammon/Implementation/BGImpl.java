@@ -1,7 +1,7 @@
 package backgammon.Implementation;
 
 import backgammon.*;
-import backgammon.Exceptions.BackgammonException;
+import backgammon.Exceptions.WrongPositionException;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -12,7 +12,7 @@ public class BGImpl implements Backgammon {
     private Color active_player;
     private Dice points;
 
-    public BGImpl() throws BackgammonException {
+    public BGImpl() throws WrongPositionException {
          for(int i=0;i<30;i++){
              this.setStone(new StoneImpl(this));
          }
@@ -23,7 +23,7 @@ public class BGImpl implements Backgammon {
          }
     }
 
-    private void replace_stones(PositionImpl position) throws BackgammonException {
+    private void replace_stones(PositionImpl position) throws WrongPositionException {
          int place_id = position.getId();
          switch (place_id) {
             case 1:
