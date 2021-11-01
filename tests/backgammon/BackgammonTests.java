@@ -2,6 +2,7 @@ package backgammon;
 
 import backgammon.Exceptions.NotEnoughPointsException;
 import backgammon.Exceptions.WrongPositionException;
+import backgammon.Exceptions.WrongStonePickedException;
 import backgammon.Implementation.BGImpl;
 import backgammon.Implementation.Color;
 import backgammon.Implementation.Dice;
@@ -47,7 +48,7 @@ public class BackgammonTests {
 
 
     @Test(expected = WrongPositionException.class)
-    public void move_to_not_allowed_positions_test_1() throws WrongPositionException, NotEnoughPointsException {
+    public void move_to_not_allowed_positions_test_1() throws WrongPositionException, NotEnoughPointsException, WrongStonePickedException {
         Backgammon BGobject = make_game_instance();
         for (int position=24; position<=50;position++){
             for (int stone=0; stone<=29;stone++){
@@ -57,7 +58,7 @@ public class BackgammonTests {
     }
 
     @Test
-    public void move_to_not_allowed_positions_test_2() throws WrongPositionException, NotEnoughPointsException {
+    public void move_to_not_allowed_positions_test_2() throws WrongPositionException, NotEnoughPointsException, WrongStonePickedException {
         Backgammon BGobject = make_game_instance();
         for (int position=-50; position<=-1;position++){
             for (int stone=0; stone<=29;stone++){
@@ -67,7 +68,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = WrongPositionException.class)
-    public void move_to_position() throws WrongPositionException, NotEnoughPointsException {
+    public void move_to_position() throws WrongPositionException, NotEnoughPointsException, WrongStonePickedException {
         Backgammon BGobject = make_game_instance();
         Color player = BGobject.start();
         Dice points = BGobject.dice();
@@ -90,7 +91,7 @@ public class BackgammonTests {
         }
     }
 
-    public void move_to_enemy_position(Backgammon BGobject, Color player) throws NotEnoughPointsException, WrongPositionException {
+    public void move_to_enemy_position(Backgammon BGobject, Color player) throws NotEnoughPointsException, WrongPositionException, WrongStonePickedException {
         if(player == Color.BLACK){
             Assert.assertTrue(BGobject.set(28,19));
         }
