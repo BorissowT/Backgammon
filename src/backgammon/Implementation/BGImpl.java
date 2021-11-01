@@ -17,7 +17,7 @@ public class BGImpl implements Backgammon {
          for(int i=0;i<30;i++){
              this.setStone(new StoneImpl(this));
          }
-         for(int i=0;i<=24;i++){
+         for(int i=0;i<=26;i++){
             PositionImpl position = new PositionImpl(this);
             replace_stones(position);
             this.setPosition(position);
