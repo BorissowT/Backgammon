@@ -10,8 +10,7 @@ public class BGImpl implements Backgammon {
     private ArrayList<StoneImpl> allStones = new ArrayList<StoneImpl>();
     private ArrayList<PositionImpl> allPositions = new ArrayList<PositionImpl>();
     private Color active_player;
-
-    private int points;
+    private Dice points;
 
     public BGImpl() throws BackgammonException {
          for(int i=0;i<30;i++){
@@ -83,11 +82,10 @@ public class BGImpl implements Backgammon {
 
     @Override
     public Dice dice() {
-
         int first_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         int second_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         Dice result = new Dice(first_dice, second_dice);
-         return result;
+        return result;
     }
 
     @Override
@@ -118,7 +116,11 @@ public class BGImpl implements Backgammon {
     }
 
 
-    public int getPoints() {
+    public Dice getPoints() {
         return points;
+    }
+
+    public Color getActive_player() {
+        return active_player;
     }
 }

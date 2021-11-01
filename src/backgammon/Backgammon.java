@@ -17,7 +17,7 @@ public interface Backgammon  {
 
     /***
      *
-     * @return Dice {"int:points","bool:if_double"}
+     * @return Dice {"int:points","bool:if_double","first_dice:int", "second_dice:int"}
      */
     Dice dice();
 

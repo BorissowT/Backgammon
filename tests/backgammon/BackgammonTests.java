@@ -3,6 +3,7 @@ package backgammon;
 import backgammon.Exceptions.BackgammonException;
 import backgammon.Implementation.BGImpl;
 import backgammon.Implementation.Color;
+import backgammon.Implementation.Dice;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,7 +27,7 @@ public class BackgammonTests {
     public void dice_test() throws BackgammonException {
         Backgammon BGobject = new BGImpl();
         for (int i=0; i<10;i++){
-            Assert.assertTrue(if_game_dice_in_range(BGobject.dice().getPoints())) ;
+            Assert.assertTrue(if_game_dice_in_range(BGobject.dice().getTotal_points())) ;
         }
     }
 
@@ -37,6 +38,7 @@ public class BackgammonTests {
             Assert.assertTrue(if_start_dice_is_black_or_white(BGobject.start()));
         }
     }
+
 
     @Test(expected = BackgammonException.class)
     public void move_to_not_allowed_positions_test_1() throws BackgammonException {
@@ -62,10 +64,14 @@ public class BackgammonTests {
     public void move_to_position() throws BackgammonException {
         Backgammon BGobject = new BGImpl();
         Color player = BGobject.start();
-        int points = BGobject.dice().getPoints();
-        if(points >= 5){
+        Dice points = BGobject.dice().getPoints();
+        if(points.getTotal_points() >= 5){
             move_to_enemy_position(BGobject, player);
         }
+    }
+    @Test
+    public void check_double_dice(){
+
     }
 
     public void move_to_enemy_position(Backgammon BGobject, Color player){
