@@ -8,7 +8,7 @@ public class StoneImpl {
 
     StoneImpl(BGImpl GameObject){
         this.id = GameObject.getAllStones().size();
-        if(this.id>15)
+        if(this.id<=14)
             this.color = color.WHITE;
         else
             this.color = color.BLACK;
