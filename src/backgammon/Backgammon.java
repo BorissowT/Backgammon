@@ -14,13 +14,13 @@ public interface Backgammon  {
 
     /***
      *
-     * @return Color.BLACK or Color.WHITE representing the first player
+     * @return Color.BLACK or Color.WHITE representing the active player
      */
     Color start();
 
     /***
      *
-     * @return Dice {"int:points","bool:if_double","first_dice:int", "second_dice:int"}
+     * @return Dice object in form {"int:points","bool:if_double","first_dice:int", "second_dice:int"}
      */
     Dice dice();
 
