@@ -25,6 +25,10 @@ public class BGImpl implements Backgammon {
          }
     }
 
+    private void setStone(StoneImpl stone) {
+        this.allStones.add(stone);
+    }
+
     private void replace_stones(PositionImpl position) throws WrongPositionException, NotEnoughPointsException {
          int place_id = position.getId();
          switch (place_id) {
@@ -99,10 +103,6 @@ public class BGImpl implements Backgammon {
     @Override
     public void give_up() {
 
-    }
-
-    public void setStone(StoneImpl stone) {
-        this.allStones.add(stone);
     }
 
     public void setPosition(PositionImpl position) {

@@ -9,6 +9,8 @@ import backgammon.Implementation.Dice;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class BackgammonTests {
 
     private boolean if_start_dice_is_black_or_white(Color result){
@@ -114,6 +116,20 @@ public class BackgammonTests {
         }
     }
 
+    @Test(expected = NotExistingStonePickedException.class)
+    public void not_existing_stone_picked_test() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException {
+        Backgammon BGobject = make_game_instance();
+        Color player = BGobject.start();
+        BGobject.dice();
+        for (int i=0; i<=100;i++){
+            int stone = ThreadLocalRandom.current().nextInt(-1000, -1);
+            if(player == Color.BLACK)
+                BGobject.set(stone,23);
+            if(player == Color.WHITE)
+                BGobject.set(stone,1);
+        }
+
+    }
 
 
 }
