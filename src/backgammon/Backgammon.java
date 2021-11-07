@@ -3,7 +3,7 @@ package backgammon;
 
 import backgammon.Exceptions.NotEnoughPointsException;
 import backgammon.Exceptions.WrongPositionException;
-import backgammon.Exceptions.WrongStonePickedException;
+import backgammon.Exceptions.NotExistingStonePickedException;
 import backgammon.Implementation.Color;
 import backgammon.Implementation.Dice;
 
@@ -30,7 +30,7 @@ public interface Backgammon  {
      * @param position id of position to move
      * @return 0 if ok. throws Exception.
      */
-    boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, WrongStonePickedException;
+    boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException;
 
     /***
      * stop the game

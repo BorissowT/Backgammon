@@ -3,7 +3,7 @@ package backgammon.Implementation;
 import backgammon.Backgammon;
 import backgammon.Exceptions.NotEnoughPointsException;
 import backgammon.Exceptions.WrongPositionException;
-import backgammon.Exceptions.WrongStonePickedException;
+import backgammon.Exceptions.NotExistingStonePickedException;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -91,7 +91,7 @@ public class BGImpl implements Backgammon {
     }
 
     @Override
-    public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, WrongStonePickedException {
+    public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException {
 
         return true;
     }
