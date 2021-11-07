@@ -14,7 +14,7 @@ public class BGImpl implements Backgammon {
     private Color active_player;
     private Dice points;
 
-    public BGImpl() throws WrongPositionException {
+    public BGImpl() throws WrongPositionException, NotEnoughPointsException {
          for(int i=0;i<30;i++){
              this.setStone(new StoneImpl(this));
          }
@@ -25,7 +25,7 @@ public class BGImpl implements Backgammon {
          }
     }
 
-    private void replace_stones(PositionImpl position) throws WrongPositionException {
+    private void replace_stones(PositionImpl position) throws WrongPositionException, NotEnoughPointsException {
          int place_id = position.getId();
          switch (place_id) {
             case 1:

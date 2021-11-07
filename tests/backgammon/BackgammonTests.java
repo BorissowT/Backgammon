@@ -26,12 +26,12 @@ public class BackgammonTests {
     }
 
 
-    private Backgammon make_game_instance() throws WrongPositionException {
+    private Backgammon make_game_instance() throws WrongPositionException, NotEnoughPointsException {
         return new BGImpl();
     }
 
     @Test
-    public void dice_test() throws WrongPositionException {
+    public void dice_test() throws WrongPositionException, NotEnoughPointsException {
         Backgammon BGobject = make_game_instance();
         for (int i=0; i<10;i++){
             Assert.assertTrue(if_game_dice_in_range(BGobject.dice().getTotal_points())) ;
@@ -39,7 +39,7 @@ public class BackgammonTests {
     }
 
     @Test
-    public void start_first_player_dice_test() throws WrongPositionException {
+    public void start_first_player_dice_test() throws WrongPositionException, NotEnoughPointsException {
         Backgammon BGobject = make_game_instance();
         for (int i=0; i<10;i++){
             Assert.assertTrue(if_start_dice_is_black_or_white(BGobject.start()));
@@ -78,8 +78,9 @@ public class BackgammonTests {
     }
 
     @Test
-    public void check_double_dice() throws WrongPositionException {
+    public void check_double_dice() throws WrongPositionException, NotEnoughPointsException {
         Backgammon BGobject = make_game_instance();
+        BGobject.start();
         for (int i=0; i<=100;i++){
             Dice points = BGobject.dice();
             if(points.If_double()){
@@ -97,6 +98,19 @@ public class BackgammonTests {
         }
         else if(player == Color.WHITE){
             Assert.assertTrue(BGobject.set(0,6));
+        }
+    }
+
+    @Test(expected = NotEnoughPointsException.class)
+    public void not_enough_points_test() throws NotEnoughPointsException, WrongPositionException, WrongStonePickedException {
+        Backgammon BGobject = make_game_instance();
+        Color player = BGobject.start();
+        for (int i=0; i<=100;i++){
+            Dice points = BGobject.dice();
+            if(player == Color.BLACK)
+                BGobject.set(28,24-points.getTotal_points()-1);
+            if(player == Color.WHITE)
+                BGobject.set(0,1+points.getTotal_points()+1);
         }
     }
 

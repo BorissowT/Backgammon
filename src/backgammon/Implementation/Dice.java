@@ -1,7 +1,7 @@
 package backgammon.Implementation;
 
 public class Dice {
-	boolean if_double = false;
+	private boolean if_double = false;
 	private int total_points;
 	private int first_dice;
 	private int second_dice;
@@ -20,7 +20,6 @@ public class Dice {
 		return this;
 	}
 
-
 	public int getTotal_points() {
 		return total_points;
 	}
@@ -36,4 +35,5 @@ public class Dice {
 	public boolean If_double() {
 		return if_double;
 	}
+
 }
