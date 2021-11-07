@@ -6,7 +6,7 @@
 ```
 /***
 *
-* @return Color.BLACK or Color.WHITE representing the first player
+* @return Color.BLACK or Color.WHITE representing the active player
 */
   
 Color start();
