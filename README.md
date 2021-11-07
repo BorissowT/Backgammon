@@ -28,6 +28,7 @@ Dice dice();
 * @param position id (see below in mapping section) of position to move
 * @return 0 if ok. throws Exception.
 */
+
 boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, WrongStonePickedException;
 
 ```
@@ -36,6 +37,7 @@ boolean set(int stone, int position) throws NotEnoughPointsException, WrongPosit
 /***
 * stop the game
 */
+
 void give_up();
 ```
 
