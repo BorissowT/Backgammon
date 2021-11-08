@@ -145,4 +145,10 @@ public class BackgammonTests {
         }
     }
 
+    @Test(expected = NotAllowedMethodException.class)
+    public void dice_before_start_test() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException {
+        Backgammon BGobject = make_game_instance();
+        BGobject.dice();
+    }
+
 }
