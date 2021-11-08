@@ -1,6 +1,7 @@
 package backgammon;
 
 
+import backgammon.Exceptions.NotAllowedMethodException;
 import backgammon.Exceptions.NotEnoughPointsException;
 import backgammon.Exceptions.WrongPositionException;
 import backgammon.Exceptions.NotExistingStonePickedException;
@@ -16,13 +17,13 @@ public interface Backgammon  {
      *
      * @return Color.BLACK or Color.WHITE representing the active player
      */
-    Color start();
+    Color start() throws NotAllowedMethodException;
 
     /***
      *
      * @return Dice object in form {"int:points","bool:if_double","first_dice:int", "second_dice:int"}
      */
-    Dice dice();
+    Dice dice() throws NotAllowedMethodException;
 
     /***
      *
