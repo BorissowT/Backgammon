@@ -1,5 +1,6 @@
 package backgammon;
 
+import backgammon.Exceptions.NotAllowedMethodException;
 import backgammon.Exceptions.NotEnoughPointsException;
 import backgammon.Exceptions.WrongPositionException;
 import backgammon.Exceptions.NotExistingStonePickedException;
@@ -27,13 +28,12 @@ public class BackgammonTests {
         return false;
     }
 
-
     private Backgammon make_game_instance() throws WrongPositionException, NotEnoughPointsException {
         return new BGImpl();
     }
 
     @Test
-    public void dice_test() throws WrongPositionException, NotEnoughPointsException {
+    public void dice_test() throws WrongPositionException, NotEnoughPointsException, NotAllowedMethodException {
         Backgammon BGobject = make_game_instance();
         for (int i=0; i<10;i++){
             Assert.assertTrue(if_game_dice_in_range(BGobject.dice().getTotal_points())) ;
@@ -41,7 +41,7 @@ public class BackgammonTests {
     }
 
     @Test
-    public void start_first_player_dice_test() throws WrongPositionException, NotEnoughPointsException {
+    public void start_first_player_dice_test() throws WrongPositionException, NotEnoughPointsException, NotAllowedMethodException {
         Backgammon BGobject = make_game_instance();
         for (int i=0; i<10;i++){
             Assert.assertTrue(if_start_dice_is_black_or_white(BGobject.start()));
@@ -70,7 +70,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = WrongPositionException.class)
-    public void move_to_position() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException {
+    public void move_to_position() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException {
         Backgammon BGobject = make_game_instance();
         Color player = BGobject.start();
         Dice points = BGobject.dice();
@@ -80,7 +80,7 @@ public class BackgammonTests {
     }
 
     @Test
-    public void check_double_dice() throws WrongPositionException, NotEnoughPointsException {
+    public void check_double_dice() throws WrongPositionException, NotEnoughPointsException, NotAllowedMethodException {
         Backgammon BGobject = make_game_instance();
         BGobject.start();
         for (int i=0; i<=100;i++){
@@ -104,7 +104,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = NotEnoughPointsException.class)
-    public void not_enough_points_test() throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException {
+    public void not_enough_points_test() throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, NotAllowedMethodException {
         Backgammon BGobject = make_game_instance();
         Color player = BGobject.start();
         for (int i=0; i<=100;i++){
@@ -117,7 +117,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = NotExistingStonePickedException.class)
-    public void not_existing_stone_picked_test() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException {
+    public void not_existing_stone_picked_test() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException, NotAllowedMethodException {
         Backgammon BGobject = make_game_instance();
         Color player = BGobject.start();
         BGobject.dice();
@@ -132,7 +132,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = NotExistingStonePickedException.class)
-    public void not_existing_stone_picked_test2() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException {
+    public void not_existing_stone_picked_test2() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException, NotAllowedMethodException {
         Backgammon BGobject = make_game_instance();
         Color player = BGobject.start();
         BGobject.dice();
@@ -143,8 +143,6 @@ public class BackgammonTests {
             if(player == Color.WHITE)
                 BGobject.set(stone,1);
         }
-
     }
-
 
 }

@@ -101,13 +101,15 @@ public class BGImpl implements Backgammon {
     public Dice dice() {
         int first_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         int second_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-        Dice result = new Dice(first_dice, second_dice);
-        return result;
+        return new Dice(first_dice, second_dice);
     }
 
     @Override
     public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException {
-
+        //validate_stone(stone);
+        //validate_position(position);
+        //validate_points(stone, position);
+        //set_stone(stone, position);
         return true;
     }
 
@@ -127,7 +129,6 @@ public class BGImpl implements Backgammon {
     public ArrayList<PositionImpl> getAllPositions() {
         return allPositions;
     }
-
 
     public Dice getPoints() {
         return points;
