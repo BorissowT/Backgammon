@@ -131,5 +131,20 @@ public class BackgammonTests {
 
     }
 
+    @Test(expected = NotExistingStonePickedException.class)
+    public void not_existing_stone_picked_test2() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException {
+        Backgammon BGobject = make_game_instance();
+        Color player = BGobject.start();
+        BGobject.dice();
+        for (int i=0; i<=100;i++){
+            int stone = ThreadLocalRandom.current().nextInt(1, 1000);
+            if(player == Color.BLACK)
+                BGobject.set(stone,23);
+            if(player == Color.WHITE)
+                BGobject.set(stone,1);
+        }
+
+    }
+
 
 }

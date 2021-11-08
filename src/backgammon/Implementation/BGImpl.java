@@ -83,6 +83,17 @@ public class BGImpl implements Backgammon {
 
     @Override
     public Color start() {
+        int start = ThreadLocalRandom.current().nextInt(1, 1 + 1);
+        switch (start) {
+            case 1 -> {
+                this.active_player = Color.WHITE;
+                return Color.WHITE;
+            }
+            case 2 -> {
+                this.active_player = Color.BLACK;
+                return Color.BLACK;
+            }
+        }
         return Color.NONE;
     }
 
