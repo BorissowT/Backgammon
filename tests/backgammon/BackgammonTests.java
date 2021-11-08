@@ -151,4 +151,20 @@ public class BackgammonTests {
         BGobject.dice();
     }
 
+    @Test(expected = NotAllowedMethodException.class)
+    public void set_before_dice_test() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, NotExistingStonePickedException {
+        Backgammon BGobject = make_game_instance();
+        Color player = BGobject.start();
+        if(player == Color.BLACK)
+            BGobject.set(28,23);
+        if(player == Color.WHITE)
+            BGobject.set(1,1);
+    }
+
+    @Test(expected = NotAllowedMethodException.class)
+    public void set_before_start_and_dice_test() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, NotExistingStonePickedException {
+        Backgammon BGobject = make_game_instance();
+        BGobject.set(28,23);
+    }
+
 }
