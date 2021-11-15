@@ -3,6 +3,7 @@ package backgammon.Implementation;
 import backgammon.Backgammon;
 import backgammon.Exceptions.NotEnoughPointsException;
 import backgammon.Exceptions.NotExistingStonePickedException;
+import backgammon.Exceptions.WrongDirectionException;
 import backgammon.Exceptions.WrongPositionException;
 
 import java.util.HashMap;
@@ -98,25 +99,55 @@ public class BGImpl implements Backgammon {
     }
 
     @Override
-    public Dice dice() {
+    public HashMap<String, Integer> dice() {
         int first_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         int second_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-        return new Dice(first_dice, second_dice);
+        change_active_player();
+        this.points = new Dice(first_dice, second_dice);
+        return this.points.get_dice_dictionary();
+    }
+
+    private void change_active_player() {
+        if(this.active_player == Color.WHITE)
+            this.active_player = Color.BLACK;
+        this.active_player = Color.WHITE;
     }
 
     @Override
-    public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException {
+    public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException {
         validate_stone(stone);
         validate_position(position);
         validate_points(stone, position);
-        //validate_if_enemy_position(position);
-        //set_stone(stone, position);
+        check_if_not_wrong_direction(stone, position);
+        //check_if_any_stone_in_bar();
+        //set_stone(stone, position);<- <-check_if_there_one_enemy_stone_on_the_position();
+        //check_if_won();
         return true;
     }
 
-    private void validate_points(int stone_id, int position_id) {
+    private void check_if_not_wrong_direction(int stone_id, int position_id) throws WrongDirectionException {
         StoneImpl Stone = this.allStones.get(stone_id);
         PositionImpl Position = this.allPositions.get(position_id);
+
+        if(this.active_player == Color.BLACK && Stone.getPositionId() < Position.getId()){
+            throw new WrongDirectionException(String.format("the stone %d is moving in wrong direction. (old position: %d new position: %d)",Stone.getId(),Stone.getPositionId(), Position.getId()));
+        }
+        if(this.active_player == Color.WHITE && Stone.getPositionId() > Position.getId()){
+            throw new WrongDirectionException(String.format("the stone %d is moving in wrong direction. (old position: %d new position: %d)",Stone.getId(),Stone.getPositionId(), Position.getId()));
+        }
+    }
+
+    private void validate_points(int stone_id, int position_id) throws NotEnoughPointsException {
+        StoneImpl Stone = this.allStones.get(stone_id);
+        PositionImpl Position = this.allPositions.get(position_id);
+
+        if(Math.abs(Stone.getPositionId() - Position.getId()) == this.getTotalPoints())
+            return;
+        if (Math.abs(Stone.getPositionId() - Position.getId()) == this.getFirstDicePoints())
+            return;
+        if (Math.abs(Stone.getPositionId() - Position.getId()) == this.getSecondDicePoints())
+            return;
+        throw new NotEnoughPointsException("Not enough points");
     }
 
 
@@ -127,8 +158,11 @@ public class BGImpl implements Backgammon {
 
     private void validate_if_next_position_not_enemy(int position_id) throws WrongPositionException {
         PositionImpl Position = this.allPositions.get(position_id);
-        if(Position.getColor() != this.active_player)
-            throw new WrongPositionException("Enemy position.");
+        if(Position.getColor() == this.active_player)
+            return;
+        if(Position.getColor() == Color.NONE)
+            return;
+        throw new WrongPositionException("Enemy position.");
     }
 
     private void validate_if_position_id_in_range(int position) throws WrongPositionException {
@@ -167,11 +201,18 @@ public class BGImpl implements Backgammon {
         return allPositions;
     }
 
-    public Dice getPoints() {
-        return points;
+    public int getTotalPoints() {
+        return points.getTotal_points();
     }
+    public int getFirstDicePoints() {
+        return points.getFirst_dice();
+    }
+    public int getSecondDicePoints(){ return points.getSecond_dice(); };
+    public boolean get_if_double(){return points.If_double();}
 
     public Color getActive_player() {
-        return active_player;
+        if (active_player == Color.BLACK)
+            return Color.BLACK;
+        return Color.WHITE;
     }
 }

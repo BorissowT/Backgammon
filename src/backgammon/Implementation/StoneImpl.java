@@ -15,6 +15,8 @@ public class StoneImpl {
     }
 
     public void setPosition(PositionImpl position) {
+        if(this.position!=null)
+            this.position.removeStone(this);
         this.position = position;
     }
 
@@ -26,7 +28,7 @@ public class StoneImpl {
         return color;
     }
 
-    public PositionImpl getPosition() {
-        return position;
+    public int getPositionId() {
+        return position.getId();
     }
 }

@@ -1,12 +1,10 @@
 package backgammon;
 
 
-import backgammon.Exceptions.NotAllowedMethodException;
-import backgammon.Exceptions.NotEnoughPointsException;
-import backgammon.Exceptions.WrongPositionException;
-import backgammon.Exceptions.NotExistingStonePickedException;
+import backgammon.Exceptions.*;
 import backgammon.Implementation.Color;
-import backgammon.Implementation.Dice;
+
+import java.util.HashMap;
 
 public interface Backgammon  {
 
@@ -23,7 +21,7 @@ public interface Backgammon  {
      *
      * @return Dice object in form {"int:points","bool:if_double","first_dice:int", "second_dice:int"}
      */
-    Dice dice() throws NotAllowedMethodException;
+    HashMap<String, Integer> dice() throws NotAllowedMethodException;
 
     /***
      *
@@ -31,7 +29,7 @@ public interface Backgammon  {
      * @param position id of position to move
      * @return 0 if ok. throws Exception.
      */
-    boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException;
+    boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException;
 
     /***
      * stop the game
