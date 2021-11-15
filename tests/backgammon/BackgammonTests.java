@@ -11,18 +11,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class BackgammonTests {
 
+    //TODO tests for stones in bar
+
     private boolean if_start_dice_is_black_or_white(Color result){
         if (result == Color.BLACK)
             return true;
-        if (result == Color.WHITE)
-            return true;
-        return false;
+        return result == Color.WHITE;
     }
 
     private boolean if_game_dice_in_range(int result) {
-        if (result>=2&&result<=24)
-            return true;
-        return false;
+        return result >= 2 && result <= 24;
     }
 
     private Backgammon make_game_instance() throws WrongPositionException, NotEnoughPointsException {
