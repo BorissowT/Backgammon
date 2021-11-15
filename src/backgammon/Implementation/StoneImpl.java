@@ -7,11 +7,11 @@ public class StoneImpl {
     private PositionImpl position;
 
     StoneImpl(BGImpl GameObject){
-        this.id = GameObject.getAllStones().size();
+        this.id = GameObject.get_stones_number();
         if(this.id<=14)
-            this.color = color.WHITE;
+            this.color = Color.WHITE;
         else
-            this.color = color.BLACK;
+            this.color = Color.BLACK;
     }
 
     public void setPosition(PositionImpl position) {

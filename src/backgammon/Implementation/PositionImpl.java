@@ -43,4 +43,5 @@ public class PositionImpl {
     public Color getColor() {
         return color;
     }
+
 }
