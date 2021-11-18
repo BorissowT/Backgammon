@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BGImpl implements Backgammon {
     private HashMap<Integer, StoneImpl> allStones =  new HashMap<Integer, StoneImpl>();
     private HashMap<Integer, PositionImpl> allPositions = new HashMap<Integer, PositionImpl>();
-    private Color active_player;
+    private Color active_player = Color.NONE;
     private Dice points;
 
     public BGImpl() throws WrongPositionException, NotEnoughPointsException {
@@ -85,15 +85,19 @@ public class BGImpl implements Backgammon {
     @Override
     public Color start() {
         int start = ThreadLocalRandom.current().nextInt(1, 1 + 1);
-        switch (start) {
-            case 1 -> {
-                this.active_player = Color.WHITE;
-                return Color.WHITE;
+        try{
+            switch (start) {
+                case 1 -> {
+                    this.active_player = Color.WHITE;
+                    return Color.WHITE;
+                }
+                case 2 -> {
+                    this.active_player = Color.BLACK;
+                    return Color.BLACK;
             }
-            case 2 -> {
-                this.active_player = Color.BLACK;
-                return Color.BLACK;
-            }
+        }
+        } catch (Exception e) {
+            return Color.NONE;
         }
         return Color.NONE;
     }
