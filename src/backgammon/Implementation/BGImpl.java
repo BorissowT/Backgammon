@@ -197,7 +197,7 @@ public class BGImpl implements Backgammon {
         return this.allStones;
     }
 
-    public int get_stones_number(){
+    public int getStonesNumberk(){
         return this.allStones.size();
     }
 
