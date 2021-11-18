@@ -108,7 +108,7 @@ public class BGImpl implements Backgammon {
         int second_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         changeActivePlayer();
         this.points = new Dice(first_dice, second_dice);
-        return this.points.get_dice_dictionary();
+        return this.points.getDiceDictionary();
     }
 
     private void changeActivePlayer() {
@@ -197,7 +197,7 @@ public class BGImpl implements Backgammon {
         return this.allStones;
     }
 
-    public int getStonesNumberk(){
+    public int getStonesNumber(){
         return this.allStones.size();
     }
 
@@ -206,13 +206,13 @@ public class BGImpl implements Backgammon {
     }
 
     public int getTotalPoints() {
-        return points.getTotal_points();
+        return points.getTotalPoints();
     }
     public int getFirstDicePoints() {
-        return points.getFirst_dice();
+        return points.getFirstDice();
     }
-    public int getSecondDicePoints(){ return points.getSecond_dice(); };
-    public boolean getIfDouble(){return points.If_double();}
+    public int getSecondDicePoints(){ return points.getSecondDice(); };
+    public boolean getIfDouble(){return points.ifDouble();}
 
     public Color getActivePlayer() {
         if (active_player == Color.BLACK)

@@ -3,43 +3,43 @@ package backgammon.Implementation;
 import java.util.HashMap;
 
 public class Dice {
-	private boolean if_double = false;
-	private int total_points;
-	private int first_dice;
-	private int second_dice;
+	private boolean ifDouble = false;
+	private int totalPoints;
+	private int firstDice; //TODO ask: was ist final?
+	private int secondDice;
 
-	public Dice(int first_dice, int second_dice) {
-		this.total_points = first_dice+second_dice;
-		if(first_dice == second_dice){
-			this.if_double = true;
-			this.total_points = (first_dice+second_dice)*2;
+	public Dice(int firstDice, int secondDice) {
+		this.totalPoints = firstDice +secondDice;
+		if(firstDice == secondDice){
+			this.ifDouble = true;
+			this.totalPoints = (firstDice +secondDice)*2;
 		}
-		this.first_dice = first_dice;
-		this.second_dice = second_dice;
+		this.firstDice = firstDice;
+		this.secondDice = secondDice;
 	}
 
-	public int getTotal_points() {
-		return total_points;
+	public int getTotalPoints() {
+		return totalPoints;
 	}
 
-	public int getFirst_dice() {
-		return first_dice;
+	public int getFirstDice() {
+		return firstDice;
 	}
 
-	public int getSecond_dice() {
-		return second_dice;
+	public int getSecondDice() {
+		return secondDice;
 	}
 
-	public boolean If_double() {
-		return if_double;
+	public boolean ifDouble() {
+		return ifDouble;
 	}
 
-	public HashMap<String, Integer> get_dice_dictionary(){
-		HashMap<String, Integer> secure_dice_dictionary = new HashMap<String, Integer>();
-		secure_dice_dictionary.put("total_points", this.getTotal_points());
-		secure_dice_dictionary.put("first_dice", this.getFirst_dice());
-		secure_dice_dictionary.put("second_dice", this.getSecond_dice());
-		secure_dice_dictionary.put("if_double", this.If_double()? 1 : 0);
-		return secure_dice_dictionary;
+	public HashMap<String, Integer> getDiceDictionary(){
+		HashMap<String, Integer> secureDiceDictionary = new HashMap<String, Integer>();
+		secureDiceDictionary.put("total_points", this.getTotalPoints());
+		secureDiceDictionary.put("first_dice", this.getFirstDice());
+		secureDiceDictionary.put("second_dice", this.getSecondDice());
+		secureDiceDictionary.put("if_double", this.ifDouble()? 1 : 0);
+		return secureDiceDictionary;
 	}
 }
