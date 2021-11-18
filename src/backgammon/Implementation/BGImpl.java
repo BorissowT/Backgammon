@@ -9,8 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BGImpl implements Backgammon {
     private HashMap<Integer, StoneImpl> allStones =  new HashMap<Integer, StoneImpl>();
     private HashMap<Integer, PositionImpl> allPositions = new HashMap<Integer, PositionImpl>();
-    private HashMap<Integer, PositionImpl> barBLACK = new HashMap<Integer, PositionImpl>();
-    private HashMap<Integer, PositionImpl> barWHITE = new HashMap<Integer, PositionImpl>();
+    private HashMap<Integer, StoneImpl> barBLACK = new HashMap<Integer, StoneImpl>();
+    private HashMap<Integer, StoneImpl> barWHITE = new HashMap<Integer, StoneImpl>();
     private Color active_player = Color.NONE;
     private Dice points = null;
 
@@ -137,22 +137,29 @@ public class BGImpl implements Backgammon {
         StoneImpl Stone = this.allStones.get(stoneId);
         PositionImpl Position = this.allPositions.get(positionId);
 
-      //  checkIfThereOneEnemyStoneOnThePosition(Stone, Position);
+        checkIfThereOneEnemyStoneOnThePosition(Stone, Position);
 
         setStoneAndPositionLowLevel(Stone,Position);
     }
 
-    private void setStoneAndPositionLowLevel(StoneImpl Stone, PositionImpl Position) throws NotEnoughPointsException, WrongPositionException {
-        Position.setStone(Stone);
-        Stone.setPosition(Position);
+    private void setStoneAndPositionLowLevel(StoneImpl Stone, PositionImpl desiredPosition) throws NotEnoughPointsException, WrongPositionException {
+        desiredPosition.setStone(Stone);
+        Stone.setPosition(desiredPosition);
     }
 
-    private void checkIfThereOneEnemyStoneOnThePosition(StoneImpl stone, PositionImpl position) {
-        if(this.active_player == Color.BLACK){
+    private void checkIfThereOneEnemyStoneOnThePosition(StoneImpl Stone, PositionImpl Position) throws NotEnoughPointsException, WrongPositionException {
+        if(Position.getStones().size() == 1){
+            placeStoneToBar(Stone, this.allPositions.get(0));
+        }
+    }
 
+    private void placeStoneToBar(StoneImpl Stone, PositionImpl Bar) throws NotEnoughPointsException, WrongPositionException {
+        setStoneAndPositionLowLevel(Stone, Bar);
+        if(this.active_player == Color.BLACK){
+            this.barWHITE.put(Stone.getId(), Stone);
         }
         if(this.active_player == Color.WHITE){
-
+            this.barBLACK.put(Stone.getId(), Stone);
         }
     }
 
