@@ -212,9 +212,9 @@ public class BGImpl implements Backgammon {
         return points.getFirst_dice();
     }
     public int getSecondDicePoints(){ return points.getSecond_dice(); };
-    public boolean get_if_double(){return points.If_double();}
+    public boolean getIfDouble(){return points.If_double();}
 
-    public Color getActive_player() {
+    public Color getActivePlayer() {
         if (active_player == Color.BLACK)
             return Color.BLACK;
         return Color.WHITE;
