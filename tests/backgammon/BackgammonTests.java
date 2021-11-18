@@ -65,18 +65,6 @@ public class BackgammonTests {
     }
 
     @Test(expected = WrongPositionException.class)
-    public void moveToNotAllowedPositionsTest2() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException, StoneInBarException {
-        Backgammon BGobject = makeGameInstance();
-        BGobject.start();
-        for (int position=-50; position<=-1;position++){
-            for (int stone=0; stone<=29;stone++){
-                BGobject.dice();
-                Assert.assertTrue(BGobject.set(stone,position));
-            }
-        }
-    }
-
-    @Test(expected = WrongPositionException.class)
     public void moveToEnemyPositionTest() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
         Backgammon BGobject = makeGameInstance();
         Color player = BGobject.start();
@@ -116,14 +104,15 @@ public class BackgammonTests {
         Backgammon BGobject = makeGameInstance();
         Color player = BGobject.start();
         HashMap<String, Integer> points = BGobject.dice();
-        while(points.get("total_points") >= 6){
+        while(points.get("total_points") != 6){
+            BGobject.dice();
             points = BGobject.dice();
         }
         if(player == Color.BLACK){
-            BGobject.set(28,18);
+            BGobject.set(28,16);
         }
         if(player == Color.WHITE){
-            BGobject.set(0,7);
+            BGobject.set(0,9);
         }
     }
 
@@ -211,5 +200,26 @@ public class BackgammonTests {
             }
             BGobject.set(1,3);
         }
+    }
+
+    @Test
+    public void setStoneWhenBarIsActive() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException, StoneInBarException, NotExistingStonePickedException {
+        Backgammon BGobject = makeGameInstance();
+        Color player = BGobject.start();
+        HashMap<String, Integer> points = BGobject.dice();
+        if(player == Color.BLACK){
+            while (points.get("first_dice") != 1 || points.get("second_dice") != 1){
+                BGobject.dice();
+                points = BGobject.dice();
+            }
+            BGobject.set(28,23);
+            points = BGobject.dice();
+            while (points.get("first_dice") != 4 || points.get("second_dice") != 4){
+                BGobject.dice();
+                points = BGobject.dice();
+            }
+            BGobject.set(10,23);
+        }
+        if(player == Color.WHITE){}
     }
 }
