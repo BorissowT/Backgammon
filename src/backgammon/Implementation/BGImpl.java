@@ -10,7 +10,7 @@ public class BGImpl implements Backgammon {
     private HashMap<Integer, StoneImpl> allStones =  new HashMap<Integer, StoneImpl>();
     private HashMap<Integer, PositionImpl> allPositions = new HashMap<Integer, PositionImpl>();
     private Color active_player = Color.NONE;
-    private Dice points;
+    private Dice points = null;
 
     public BGImpl() throws WrongPositionException, NotEnoughPointsException {
          for(int i=0;i<30;i++){
@@ -120,6 +120,7 @@ public class BGImpl implements Backgammon {
     @Override
     public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException {
         validateIfGameStarted();
+        validateIfDiced();
         validateStone(stone);
         validatePosition(position);
         validatePoints(stone, position);
@@ -128,6 +129,11 @@ public class BGImpl implements Backgammon {
         //set_stone(stone, position);<- <-check_if_there_one_enemy_stone_on_the_position();
         //check_if_won();
         return true;
+    }
+
+    private void validateIfDiced() throws NotAllowedMethodException {
+        if(this.points == null)
+            throw new NotAllowedMethodException("Dice before set");
     }
 
     private void validateIfGameStarted() throws NotAllowedMethodException {

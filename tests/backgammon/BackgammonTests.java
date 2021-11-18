@@ -69,6 +69,7 @@ public class BackgammonTests {
         BGobject.start();
         for (int position=-50; position<=-1;position++){
             for (int stone=0; stone<=29;stone++){
+                BGobject.dice();
                 Assert.assertTrue(BGobject.set(stone,position));
             }
         }
