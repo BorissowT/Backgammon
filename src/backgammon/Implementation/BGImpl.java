@@ -84,7 +84,7 @@ public class BGImpl implements Backgammon {
     @Override
     public Color start() {
         //TODO ask: wie wäre es am besten hier
-        int start = ThreadLocalRandom.current().nextInt(1, 1 + 1);
+        int start = ThreadLocalRandom.current().nextInt(1, 3);
         try{
             switch (start) {
                 case 1 -> {
@@ -114,9 +114,11 @@ public class BGImpl implements Backgammon {
     }
 
     private void changeActivePlayer() {
+        if(this.points==null)
+            return;
         if(this.active_player == Color.WHITE)
             this.active_player = Color.BLACK;
-        this.active_player = Color.WHITE;
+        else this.active_player = Color.WHITE;
     }
 
     @Override
@@ -140,6 +142,7 @@ public class BGImpl implements Backgammon {
         checkIfStoneWasInBar(Stone);
         checkIfThereOneEnemyStoneOnThePosition(Stone, Position);
         setStoneAndPositionLowLevel(Stone,Position);
+        //sub from points
     }
 
     private void checkIfStoneWasInBar(StoneImpl Stone) {
