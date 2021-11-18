@@ -131,8 +131,15 @@ public class BGImpl implements Backgammon {
         checkIfNotWrongDirection(stoneId, positionId);
         checkIfAnyStoneInBar();
         setStoneInPosition(stoneId, positionId);
-        //check_if_won();
+        checkIfWin();
         return true;
+    }
+
+    private void checkIfWin() {
+        if(this.allPositions.get(27).getStones().size()==15)
+            System.out.println("Black player wins!");
+        if(this.allPositions.get(0).getStones().size()==15)
+            System.out.println("White player wins!");
     }
 
     private void setStoneInPosition(int stoneId, int positionId) throws NotEnoughPointsException, WrongPositionException {
