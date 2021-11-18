@@ -202,7 +202,7 @@ public class BackgammonTests {
         }
     }
 
-    @Test
+    @Test(expected = StoneInBarException.class)
     public void setStoneWhenBarIsActive() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException, StoneInBarException, NotExistingStonePickedException {
         Backgammon BGobject = makeGameInstance();
         Color player = BGobject.start();
@@ -219,7 +219,31 @@ public class BackgammonTests {
                 points = BGobject.dice();
             }
             BGobject.set(10,23);
+            points = BGobject.dice();
+            while (points.get("first_dice") != 1 || points.get("second_dice") != 1){
+                BGobject.dice();
+                points = BGobject.dice();
+            }
+            BGobject.set(22,7);
         }
-        if(player == Color.WHITE){}
+        if(player == Color.WHITE){
+            while (points.get("first_dice") != 1 || points.get("second_dice") != 1){
+                BGobject.dice();
+                points = BGobject.dice();
+            }
+            BGobject.set(10,20);
+            points = BGobject.dice();
+            while (points.get("first_dice") != 4 || points.get("second_dice") != 4){
+                BGobject.dice();
+                points = BGobject.dice();
+            }
+            BGobject.set(28,20);
+            points = BGobject.dice();
+            while (points.get("first_dice") != 1 || points.get("second_dice") != 1){
+                BGobject.dice();
+                points = BGobject.dice();
+            }
+            BGobject.set(7,18);
+        }
     }
 }

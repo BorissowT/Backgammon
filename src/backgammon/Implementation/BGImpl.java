@@ -165,7 +165,7 @@ public class BGImpl implements Backgammon {
 
     private void checkIfThereOneEnemyStoneOnThePosition(StoneImpl Stone, PositionImpl Position) throws NotEnoughPointsException, WrongPositionException {
         if(Position.getStones().size() == 1){
-            placeStoneToBar(Stone, this.allPositions.get(0));
+            placeStoneToBar(Position.getStones().get(0), this.allPositions.get(0));
         }
     }
 
