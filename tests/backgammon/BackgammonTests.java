@@ -49,18 +49,16 @@ public class BackgammonTests {
     public void moveStoneInWrongDirection() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
         Backgammon BGobject = makeGameInstance();
         Color player = BGobject.start();
-        for(int i=0; i<=100;  i++){
-            HashMap<String, Integer> points = BGobject.dice();
-            while(points.get("total_points") != 5){
-                BGobject.dice();
-                points = BGobject.dice();
-            }
-            if(player == Color.BLACK){
-                Assert.assertTrue(BGobject.set(23,18));
-            }
-            if(player == Color.WHITE){
-                Assert.assertTrue(BGobject.set(6,7));
-            }
+        HashMap<String, Integer> points = BGobject.dice();
+        while(points.get("total_points") != 5){
+            BGobject.dice();
+            points = BGobject.dice();
+        }
+        if(player == Color.BLACK){
+            Assert.assertTrue(BGobject.set(23,18));
+        }
+        if(player == Color.WHITE){
+            Assert.assertTrue(BGobject.set(6,7));
         }
     }
 

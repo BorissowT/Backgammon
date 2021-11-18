@@ -140,8 +140,14 @@ public class BGImpl implements Backgammon {
         PositionImpl Position = this.allPositions.get(positionId);
 
         checkIfThereOneEnemyStoneOnThePosition(Position);
+        takeOffPoints(Stone,Position);
         setStoneAndPositionLowLevel(Stone,Position);
-        //sub from points
+
+    }
+
+    private void takeOffPoints(StoneImpl Stone, PositionImpl Position) {
+        int pointsToTakeOff = Math.abs(Stone.getPositionId() - Position.getId());
+        this.points.takeOffPoints(pointsToTakeOff);
     }
 
     private void setStoneAndPositionLowLevel(StoneImpl Stone, PositionImpl desiredPosition) throws NotEnoughPointsException, WrongPositionException {
@@ -199,14 +205,14 @@ public class BGImpl implements Backgammon {
         StoneImpl Stone = this.allStones.get(stone_id);
         PositionImpl Position = this.allPositions.get(position_id);
 
-        if(Math.abs(Stone.getPositionId() - Position.getId()) == this.getTotalPoints())
+        if(Math.abs(Stone.getPositionId() - Position.getId()) == this.getTotalPoints() && Math.abs(Stone.getPositionId() - Position.getId())<=this.getTotalPoints())
             return;
-        if (Math.abs(Stone.getPositionId() - Position.getId()) == this.getFirstDicePoints())
+        if (Math.abs(Stone.getPositionId() - Position.getId()) == this.getFirstDicePoints() && Math.abs(Stone.getPositionId() - Position.getId())<=this.getTotalPoints())
             return;
-        if (Math.abs(Stone.getPositionId() - Position.getId()) == this.getSecondDicePoints())
+        if (Math.abs(Stone.getPositionId() - Position.getId()) == this.getSecondDicePoints() && Math.abs(Stone.getPositionId() - Position.getId())<=this.getTotalPoints())
             return;
         if (this.getIfDouble()){
-            if (Math.abs(Stone.getPositionId() - Position.getId()) == this.getTotalPoints()/2)
+            if (Math.abs(Stone.getPositionId() - Position.getId()) == this.getTotalPoints()/2 && Math.abs(Stone.getPositionId() - Position.getId())<=this.getTotalPoints())
                 return;
         }
         throw new NotEnoughPointsException("Not enough points");

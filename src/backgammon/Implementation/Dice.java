@@ -42,4 +42,8 @@ public class Dice {
 		secureDiceDictionary.put("if_double", this.ifDouble()? 1 : 0);
 		return secureDiceDictionary;
 	}
+
+	public void takeOffPoints(int pointsToTakeOff) {
+		this.totalPoints=this.totalPoints-pointsToTakeOff;
+	}
 }
