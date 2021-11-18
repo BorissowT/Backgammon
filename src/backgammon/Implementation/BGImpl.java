@@ -1,10 +1,7 @@
 package backgammon.Implementation;
 
 import backgammon.Backgammon;
-import backgammon.Exceptions.NotEnoughPointsException;
-import backgammon.Exceptions.NotExistingStonePickedException;
-import backgammon.Exceptions.WrongDirectionException;
-import backgammon.Exceptions.WrongPositionException;
+import backgammon.Exceptions.*;
 
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -84,6 +81,7 @@ public class BGImpl implements Backgammon {
 
     @Override
     public Color start() {
+        //TODO ask: wie wäre es am besten hier
         int start = ThreadLocalRandom.current().nextInt(1, 1 + 1);
         try{
             switch (start) {
@@ -103,7 +101,9 @@ public class BGImpl implements Backgammon {
     }
 
     @Override
-    public HashMap<String, Integer> dice() {
+    public HashMap<String, Integer> dice() throws NotAllowedMethodException {
+        if(this.active_player == Color.NONE)
+            throw new NotAllowedMethodException("diced before start");
         int first_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         int second_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         change_active_player();

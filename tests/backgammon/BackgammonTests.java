@@ -30,6 +30,7 @@ public class BackgammonTests {
     @Test
     public void dice_test() throws WrongPositionException, NotEnoughPointsException, NotAllowedMethodException {
         Backgammon BGobject = make_game_instance();
+        BGobject.start();
         for (int i=0; i<10;i++){
             Assert.assertTrue(if_game_dice_in_range(BGobject.dice().get("total_points"))) ;
         }
