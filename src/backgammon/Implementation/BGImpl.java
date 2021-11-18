@@ -20,7 +20,7 @@ public class BGImpl implements Backgammon {
          }
          for(int i=0;i<=26;i++){
             PositionImpl position = new PositionImpl(this);
-            replaceStones(position);
+            replaceStartStones(position);
             this.setPosition(position);
          }
     }
@@ -29,54 +29,54 @@ public class BGImpl implements Backgammon {
         this.allStones.put(stone.getId(), stone);
     }
 
-    private void replaceStones(PositionImpl position) throws WrongPositionException, NotEnoughPointsException {
+    private void replaceStartStones(PositionImpl position) throws WrongPositionException, NotEnoughPointsException {
          int place_id = position.getId();
          switch (place_id) {
             case 1:
-                position.setStone(this.getAllStones().get(0));
-                position.setStone(this.getAllStones().get(1));
-                break;
+                setStoneAndPositionLowLevel(this.getAllStones().get(0),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(1),position);;
             case 12:
-                position.setStone(this.getAllStones().get(2));
-                position.setStone(this.getAllStones().get(3));
-                position.setStone(this.getAllStones().get(4));
-                position.setStone(this.getAllStones().get(5));
-                position.setStone(this.getAllStones().get(6));
+                setStoneAndPositionLowLevel(this.getAllStones().get(2),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(3),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(4),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(5),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(6),position);
                 break;
             case 17:
-                position.setStone(this.getAllStones().get(7));
-                position.setStone(this.getAllStones().get(8));
-                position.setStone(this.getAllStones().get(9));
+                //position.setStone(this.getAllStones().get(7));
+                setStoneAndPositionLowLevel(this.getAllStones().get(7),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(8),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(9),position);
                 break;
             case 19:
-                position.setStone(this.getAllStones().get(10));
-                position.setStone(this.getAllStones().get(11));
-                position.setStone(this.getAllStones().get(12));
-                position.setStone(this.getAllStones().get(13));
-                position.setStone(this.getAllStones().get(14));
+                setStoneAndPositionLowLevel(this.getAllStones().get(10),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(11),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(12),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(13),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(14),position);
                 break;
             case 6:
-                position.setStone(this.getAllStones().get(15));
-                position.setStone(this.getAllStones().get(16));
-                position.setStone(this.getAllStones().get(17));
-                position.setStone(this.getAllStones().get(18));
-                position.setStone(this.getAllStones().get(19));
+                setStoneAndPositionLowLevel(this.getAllStones().get(15),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(16),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(17),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(18),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(19),position);
                 break;
             case 8:
-                position.setStone(this.getAllStones().get(20));
-                position.setStone(this.getAllStones().get(21));
-                position.setStone(this.getAllStones().get(22));
+                setStoneAndPositionLowLevel(this.getAllStones().get(20),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(21),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(22),position);
                 break;
             case 13:
-                position.setStone(this.getAllStones().get(23));
-                position.setStone(this.getAllStones().get(24));
-                position.setStone(this.getAllStones().get(25));
-                position.setStone(this.getAllStones().get(26));
-                position.setStone(this.getAllStones().get(27));
+                setStoneAndPositionLowLevel(this.getAllStones().get(23),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(24),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(25),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(26),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(27),position);
                 break;
             case 24:
-                position.setStone(this.getAllStones().get(28));
-                position.setStone(this.getAllStones().get(29));
+                setStoneAndPositionLowLevel(this.getAllStones().get(28),position);
+                setStoneAndPositionLowLevel(this.getAllStones().get(29),position);
                 break;
          }
     }
@@ -120,17 +120,40 @@ public class BGImpl implements Backgammon {
     }
 
     @Override
-    public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException, StoneInBarException {
+    public boolean set(int stoneId, int positionId) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException, StoneInBarException {
         validateIfGameStarted();
         validateIfDiced();
-        validateStone(stone);
-        validatePosition(position);
-        validatePoints(stone, position);
-        checkIfNotWrongDirection(stone, position);
+        validateStone(stoneId);
+        validatePosition(positionId);
+        validatePoints(stoneId, positionId);
+        checkIfNotWrongDirection(stoneId, positionId);
         checkIfAnyStoneInBar();
-        //set_stone(stone, position);<- <-check_if_there_one_enemy_stone_on_the_position();
+        setStoneInPosition(stoneId, positionId);
         //check_if_won();
         return true;
+    }
+
+    private void setStoneInPosition(int stoneId, int positionId) throws NotEnoughPointsException, WrongPositionException {
+        StoneImpl Stone = this.allStones.get(stoneId);
+        PositionImpl Position = this.allPositions.get(positionId);
+
+      //  checkIfThereOneEnemyStoneOnThePosition(Stone, Position);
+
+        setStoneAndPositionLowLevel(Stone,Position);
+    }
+
+    private void setStoneAndPositionLowLevel(StoneImpl Stone, PositionImpl Position) throws NotEnoughPointsException, WrongPositionException {
+        Position.setStone(Stone);
+        Stone.setPosition(Position);
+    }
+
+    private void checkIfThereOneEnemyStoneOnThePosition(StoneImpl stone, PositionImpl position) {
+        if(this.active_player == Color.BLACK){
+
+        }
+        if(this.active_player == Color.WHITE){
+
+        }
     }
 
     private void checkIfAnyStoneInBar() throws StoneInBarException {

@@ -21,12 +21,7 @@ public class PositionImpl {
     }
 
     public void setStone(StoneImpl newStone) throws WrongPositionException, NotEnoughPointsException {
-        //TODO
-
         validateColor(newStone);
-        //TODO
-        // change status of removed stone after removal of enemy stone
-        newStone.setPosition(this);
         this.stones.add(newStone);
         calculateColorOfThePosition();
     }
@@ -35,6 +30,9 @@ public class PositionImpl {
        if(this.stones.size()>1){
            this.color = this.stones.get(0).getColor();
        }
+        if(this.stones.size()==0){
+            this.color = Color.NONE;
+        }
     }
 
     private void validateColor(StoneImpl newStone) throws WrongPositionException {
