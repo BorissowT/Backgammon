@@ -9,8 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BGImpl implements Backgammon {
     private HashMap<Integer, StoneImpl> allStones =  new HashMap<Integer, StoneImpl>();
     private HashMap<Integer, PositionImpl> allPositions = new HashMap<Integer, PositionImpl>();
-    private HashMap<Integer, StoneImpl> barBLACK = new HashMap<Integer, StoneImpl>();
-    private HashMap<Integer, StoneImpl> barWHITE = new HashMap<Integer, StoneImpl>();
+    //private HashMap<Integer, StoneImpl> barBLACK = new HashMap<Integer, StoneImpl>();
+    //private HashMap<Integer, StoneImpl> barWHITE = new HashMap<Integer, StoneImpl>();
     private Color active_player = Color.NONE;
     private Dice points = null;
 
@@ -18,7 +18,7 @@ public class BGImpl implements Backgammon {
          for(int i=0;i<30;i++){
              this.setStone(new StoneImpl(this));
          }
-         for(int i=0;i<=26;i++){
+         for(int i=0;i<=27;i++){
             PositionImpl position = new PositionImpl(this);
             replaceStartStones(position);
             this.setPosition(position);
@@ -139,53 +139,50 @@ public class BGImpl implements Backgammon {
         StoneImpl Stone = this.allStones.get(stoneId);
         PositionImpl Position = this.allPositions.get(positionId);
 
-        checkIfStoneWasInBar(Stone);
-        checkIfThereOneEnemyStoneOnThePosition(Stone, Position);
+        //checkIfStoneWasInBar(Stone);
+        checkIfThereOneEnemyStoneOnThePosition(Position);
         setStoneAndPositionLowLevel(Stone,Position);
         //sub from points
     }
 
-    private void checkIfStoneWasInBar(StoneImpl Stone) {
+/*    private void checkIfStoneWasInBar(StoneImpl Stone) {
         if(this.active_player == Color.BLACK){
-            if(Stone.getPositionId()==0){
-                this.barBLACK.remove(Stone.getId());
+            if(Stone.getPositionId()==25){
+                this.allPositions.get(25).removeStone(Stone);   //.remove(Stone.getId());
             }
         }
         if(this.active_player == Color.WHITE){
             if(Stone.getPositionId()==0){
-                this.barWHITE.remove(Stone.getId());
+                this.allPositions.get(0).removeStone(Stone);
             }
         }
-    }
+    }*/
 
     private void setStoneAndPositionLowLevel(StoneImpl Stone, PositionImpl desiredPosition) throws NotEnoughPointsException, WrongPositionException {
         desiredPosition.setStone(Stone);
         Stone.setPosition(desiredPosition);
     }
 
-    private void checkIfThereOneEnemyStoneOnThePosition(StoneImpl Stone, PositionImpl Position) throws NotEnoughPointsException, WrongPositionException {
+    private void checkIfThereOneEnemyStoneOnThePosition( PositionImpl Position) throws NotEnoughPointsException, WrongPositionException {
         if(Position.getStones().size() == 1){
-            placeStoneToBar(Position.getStones().get(0), this.allPositions.get(0));
+            if(this.active_player == Color.WHITE)
+                placeStoneToBar(Position.getStones().get(0), this.allPositions.get(25));
+            if(this.active_player == Color.BLACK)
+                placeStoneToBar(Position.getStones().get(0), this.allPositions.get(0));
         }
     }
 
     private void placeStoneToBar(StoneImpl Stone, PositionImpl Bar) throws NotEnoughPointsException, WrongPositionException {
         setStoneAndPositionLowLevel(Stone, Bar);
-        if(this.active_player == Color.BLACK){
-            this.barWHITE.put(Stone.getId(), Stone);
-        }
-        if(this.active_player == Color.WHITE){
-            this.barBLACK.put(Stone.getId(), Stone);
-        }
     }
 
     private void checkIfAnyStoneInBar() throws StoneInBarException {
         if(this.active_player == Color.BLACK){
-            if(this.barBLACK.size()>0)
+            if(this.allPositions.get(25).getStones().size()>0)
                 throw new StoneInBarException("You have to move first stone from the bar");
         }
         if(this.active_player == Color.WHITE){
-            if(this.barWHITE.size()>0)
+            if(this.allPositions.get(0).getStones().size()>0)
                 throw new StoneInBarException("You have to move first stone from the bar");
         }
     }
