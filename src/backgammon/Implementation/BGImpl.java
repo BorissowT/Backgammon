@@ -9,6 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BGImpl implements Backgammon {
     private HashMap<Integer, StoneImpl> allStones =  new HashMap<Integer, StoneImpl>();
     private HashMap<Integer, PositionImpl> allPositions = new HashMap<Integer, PositionImpl>();
+    private HashMap<Integer, PositionImpl> barBLACK = new HashMap<Integer, PositionImpl>();
+    private HashMap<Integer, PositionImpl> barWHITE = new HashMap<Integer, PositionImpl>();
     private Color active_player = Color.NONE;
     private Dice points = null;
 
@@ -118,17 +120,28 @@ public class BGImpl implements Backgammon {
     }
 
     @Override
-    public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException {
+    public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException, StoneInBarException {
         validateIfGameStarted();
         validateIfDiced();
         validateStone(stone);
         validatePosition(position);
         validatePoints(stone, position);
         checkIfNotWrongDirection(stone, position);
-        //check_if_any_stone_in_bar();
+        checkIfAnyStoneInBar();
         //set_stone(stone, position);<- <-check_if_there_one_enemy_stone_on_the_position();
         //check_if_won();
         return true;
+    }
+
+    private void checkIfAnyStoneInBar() throws StoneInBarException {
+        if(this.active_player == Color.BLACK){
+            if(this.barBLACK.size()>0)
+                throw new StoneInBarException("You have to move first stone from the bar");
+        }
+        if(this.active_player == Color.WHITE){
+            if(this.barWHITE.size()>0)
+                throw new StoneInBarException("You have to move first stone from the bar");
+        }
     }
 
     private void validateIfDiced() throws NotAllowedMethodException {

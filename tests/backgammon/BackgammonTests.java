@@ -46,7 +46,7 @@ public class BackgammonTests {
 
 
     @Test(expected = WrongDirectionException.class)
-    public void moveStoneInWrongDirection() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException {
+    public void moveStoneInWrongDirection() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
         Backgammon BGobject = makeGameInstance();
         Color player = BGobject.start();
         for(int i=0; i<=100;  i++){
@@ -64,7 +64,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = WrongPositionException.class)
-    public void moveToNotAllowedPositionsTest2() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException {
+    public void moveToNotAllowedPositionsTest2() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException, StoneInBarException {
         Backgammon BGobject = makeGameInstance();
         BGobject.start();
         for (int position=-50; position<=-1;position++){
@@ -76,7 +76,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = WrongPositionException.class)
-    public void moveToEnemyPositionTest() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException {
+    public void moveToEnemyPositionTest() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
         Backgammon BGobject = makeGameInstance();
         Color player = BGobject.start();
         HashMap<String, Integer> points = BGobject.dice();
@@ -100,7 +100,7 @@ public class BackgammonTests {
         }
     }
 
-    public void moveToEnemyPosition(Backgammon BGobject, Color player) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException {
+    public void moveToEnemyPosition(Backgammon BGobject, Color player) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException, StoneInBarException {
         if(player == Color.BLACK){
             Assert.assertTrue(BGobject.set(28,19));
         }
@@ -110,7 +110,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = NotEnoughPointsException.class)
-    public void notEnoughPointsTest() throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException {
+    public void notEnoughPointsTest() throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
         Backgammon BGobject = makeGameInstance();
         Color player = BGobject.start();
         HashMap<String, Integer> points = BGobject.dice();
@@ -126,7 +126,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = NotExistingStonePickedException.class)
-    public void notExistingStonePickedTest() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException {
+    public void notExistingStonePickedTest() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
         Backgammon BGobject = makeGameInstance();
         Color player = BGobject.start();
         BGobject.dice();
@@ -141,7 +141,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = NotExistingStonePickedException.class)
-    public void notExistingStonePickedTest2() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException {
+    public void notExistingStonePickedTest2() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
         Backgammon BGobject = makeGameInstance();
         Color player = BGobject.start();
         BGobject.dice();
@@ -161,7 +161,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = NotAllowedMethodException.class)
-    public void setBeforeDiceTest() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, NotExistingStonePickedException, WrongDirectionException {
+    public void setBeforeDiceTest() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, NotExistingStonePickedException, WrongDirectionException, StoneInBarException {
         Backgammon BGobject = makeGameInstance();
         Color player = BGobject.start();
         if(player == Color.BLACK)
@@ -171,7 +171,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = NotAllowedMethodException.class)
-    public void setBeforeStartTest() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, NotExistingStonePickedException, WrongDirectionException {
+    public void setBeforeStartTest() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, NotExistingStonePickedException, WrongDirectionException, StoneInBarException {
         Backgammon BGobject = makeGameInstance();
         BGobject.set(28,23);
     }

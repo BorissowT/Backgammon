@@ -29,7 +29,7 @@ public interface Backgammon  {
      * @param position id of position to move
      * @return 0 if ok. throws Exception.
      */
-    boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException;
+    boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException, StoneInBarException;
 
     /***
      * stop the game
