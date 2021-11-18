@@ -139,24 +139,10 @@ public class BGImpl implements Backgammon {
         StoneImpl Stone = this.allStones.get(stoneId);
         PositionImpl Position = this.allPositions.get(positionId);
 
-        //checkIfStoneWasInBar(Stone);
         checkIfThereOneEnemyStoneOnThePosition(Position);
         setStoneAndPositionLowLevel(Stone,Position);
         //sub from points
     }
-
-/*    private void checkIfStoneWasInBar(StoneImpl Stone) {
-        if(this.active_player == Color.BLACK){
-            if(Stone.getPositionId()==25){
-                this.allPositions.get(25).removeStone(Stone);   //.remove(Stone.getId());
-            }
-        }
-        if(this.active_player == Color.WHITE){
-            if(Stone.getPositionId()==0){
-                this.allPositions.get(0).removeStone(Stone);
-            }
-        }
-    }*/
 
     private void setStoneAndPositionLowLevel(StoneImpl Stone, PositionImpl desiredPosition) throws NotEnoughPointsException, WrongPositionException {
         desiredPosition.setStone(Stone);
@@ -219,9 +205,12 @@ public class BGImpl implements Backgammon {
             return;
         if (Math.abs(Stone.getPositionId() - Position.getId()) == this.getSecondDicePoints())
             return;
+        if (this.getIfDouble()){
+            if (Math.abs(Stone.getPositionId() - Position.getId()) == this.getTotalPoints()/2)
+                return;
+        }
         throw new NotEnoughPointsException("Not enough points");
     }
-
 
     private void validatePosition(int position_id) throws WrongPositionException {
        validateIfPositionIdInRange(position_id);

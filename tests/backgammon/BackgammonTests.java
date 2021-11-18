@@ -246,4 +246,31 @@ public class BackgammonTests {
             BGobject.set(7,18);
         }
     }
+
+    @Test(expected = NotEnoughPointsException.class)
+    public void outOfPointsTest() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException, StoneInBarException, NotExistingStonePickedException {
+        Backgammon BGobject = makeGameInstance();
+        Color player = BGobject.start();
+        HashMap<String, Integer> points = BGobject.dice();
+        if(player == Color.BLACK){
+            while (points.get("first_dice") != 2 || points.get("second_dice") != 2){
+                BGobject.dice();
+                points = BGobject.dice();
+            }
+            BGobject.set(28,22);
+            BGobject.set(28,20);
+            BGobject.set(28,18);
+            BGobject.set(28,14);
+        }
+        if(player == Color.WHITE){
+            while (points.get("first_dice") != 2 || points.get("second_dice") != 2){
+                BGobject.dice();
+                points = BGobject.dice();
+            }
+            BGobject.set(1,3);
+            BGobject.set(1,5);
+            BGobject.set(1,7);
+            BGobject.set(1,11);
+        }
+    }
 }

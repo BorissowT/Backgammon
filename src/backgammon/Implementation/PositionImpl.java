@@ -41,8 +41,8 @@ public class PositionImpl {
     }
 
     public void removeStone(StoneImpl stone){
-        //TODO calculate color of the position
         this.stones.remove(stone);
+        this.calculateColorOfThePosition();
     }
 
     public int getId() {
