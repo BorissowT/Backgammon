@@ -18,7 +18,7 @@ public class BGImpl implements Backgammon {
          }
          for(int i=0;i<=26;i++){
             PositionImpl position = new PositionImpl(this);
-            replace_stones(position);
+            replaceStones(position);
             this.setPosition(position);
          }
     }
@@ -27,7 +27,7 @@ public class BGImpl implements Backgammon {
         this.allStones.put(stone.getId(), stone);
     }
 
-    private void replace_stones(PositionImpl position) throws WrongPositionException, NotEnoughPointsException {
+    private void replaceStones(PositionImpl position) throws WrongPositionException, NotEnoughPointsException {
          int place_id = position.getId();
          switch (place_id) {
             case 1:
@@ -106,12 +106,12 @@ public class BGImpl implements Backgammon {
             throw new NotAllowedMethodException("diced before start");
         int first_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
         int second_dice = ThreadLocalRandom.current().nextInt(1, 6 + 1);
-        change_active_player();
+        changeActivePlayer();
         this.points = new Dice(first_dice, second_dice);
         return this.points.get_dice_dictionary();
     }
 
-    private void change_active_player() {
+    private void changeActivePlayer() {
         if(this.active_player == Color.WHITE)
             this.active_player = Color.BLACK;
         this.active_player = Color.WHITE;
@@ -119,17 +119,17 @@ public class BGImpl implements Backgammon {
 
     @Override
     public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException {
-        validate_stone(stone);
-        validate_position(position);
-        validate_points(stone, position);
-        check_if_not_wrong_direction(stone, position);
+        validateStone(stone);
+        validatePosition(position);
+        validatePoints(stone, position);
+        checkIfNotWrongDirection(stone, position);
         //check_if_any_stone_in_bar();
         //set_stone(stone, position);<- <-check_if_there_one_enemy_stone_on_the_position();
         //check_if_won();
         return true;
     }
 
-    private void check_if_not_wrong_direction(int stone_id, int position_id) throws WrongDirectionException {
+    private void checkIfNotWrongDirection(int stone_id, int position_id) throws WrongDirectionException {
         StoneImpl Stone = this.allStones.get(stone_id);
         PositionImpl Position = this.allPositions.get(position_id);
 
@@ -141,7 +141,7 @@ public class BGImpl implements Backgammon {
         }
     }
 
-    private void validate_points(int stone_id, int position_id) throws NotEnoughPointsException {
+    private void validatePoints(int stone_id, int position_id) throws NotEnoughPointsException {
         StoneImpl Stone = this.allStones.get(stone_id);
         PositionImpl Position = this.allPositions.get(position_id);
 
@@ -155,12 +155,12 @@ public class BGImpl implements Backgammon {
     }
 
 
-    private void validate_position(int position_id) throws WrongPositionException {
-       validate_if_position_id_in_range(position_id);
-       validate_if_next_position_not_enemy(position_id);
+    private void validatePosition(int position_id) throws WrongPositionException {
+       validateIfPositionIdInRange(position_id);
+       validateIfNextPositionNotEnemy(position_id);
     }
 
-    private void validate_if_next_position_not_enemy(int position_id) throws WrongPositionException {
+    private void validateIfNextPositionNotEnemy(int position_id) throws WrongPositionException {
         PositionImpl Position = this.allPositions.get(position_id);
         if(Position.getColor() == this.active_player)
             return;
@@ -169,12 +169,12 @@ public class BGImpl implements Backgammon {
         throw new WrongPositionException("Enemy position.");
     }
 
-    private void validate_if_position_id_in_range(int position) throws WrongPositionException {
+    private void validateIfPositionIdInRange(int position) throws WrongPositionException {
         if(position > 26 || position < 0)
             throw new WrongPositionException("Position doesn't exist");
     }
 
-    private void validate_stone(int stone) throws NotExistingStonePickedException {
+    private void validateStone(int stone) throws NotExistingStonePickedException {
         if (this.active_player == Color.WHITE){
             if(stone < 0 || stone >14)
                 throw new NotExistingStonePickedException("Stone isn't allowed");
@@ -186,7 +186,7 @@ public class BGImpl implements Backgammon {
     }
 
     @Override
-    public void give_up() {
+    public void giveUp() {
     }
 
     public void setPosition(PositionImpl position) {

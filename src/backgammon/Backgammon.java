@@ -34,5 +34,5 @@ public interface Backgammon  {
     /***
      * stop the game
      */
-    void give_up();
+    void giveUp();
 }
