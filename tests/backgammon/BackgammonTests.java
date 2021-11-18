@@ -64,8 +64,9 @@ public class BackgammonTests {
     }
 
     @Test(expected = WrongPositionException.class)
-    public void moveToNotAllowedPositionsTest2() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, WrongDirectionException {
+    public void moveToNotAllowedPositionsTest2() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException {
         Backgammon BGobject = makeGameInstance();
+        BGobject.start();
         for (int position=-50; position<=-1;position++){
             for (int stone=0; stone<=29;stone++){
                 Assert.assertTrue(BGobject.set(stone,position));
@@ -98,7 +99,7 @@ public class BackgammonTests {
         }
     }
 
-    public void moveToEnemyPosition(Backgammon BGobject, Color player) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException {
+    public void moveToEnemyPosition(Backgammon BGobject, Color player) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException {
         if(player == Color.BLACK){
             Assert.assertTrue(BGobject.set(28,19));
         }
@@ -169,7 +170,7 @@ public class BackgammonTests {
     }
 
     @Test(expected = NotAllowedMethodException.class)
-    public void setBeforeStartAndDiceTest() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, NotExistingStonePickedException, WrongDirectionException {
+    public void setBeforeStartTest() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, NotExistingStonePickedException, WrongDirectionException {
         Backgammon BGobject = makeGameInstance();
         BGobject.set(28,23);
     }

@@ -118,7 +118,8 @@ public class BGImpl implements Backgammon {
     }
 
     @Override
-    public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException {
+    public boolean set(int stone, int position) throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, WrongDirectionException, NotAllowedMethodException {
+        validateIfGameStarted();
         validateStone(stone);
         validatePosition(position);
         validatePoints(stone, position);
@@ -127,6 +128,11 @@ public class BGImpl implements Backgammon {
         //set_stone(stone, position);<- <-check_if_there_one_enemy_stone_on_the_position();
         //check_if_won();
         return true;
+    }
+
+    private void validateIfGameStarted() throws NotAllowedMethodException {
+        if(this.active_player == Color.NONE)
+            throw new NotAllowedMethodException("The method start() hasn't been called before");
     }
 
     private void checkIfNotWrongDirection(int stone_id, int position_id) throws WrongDirectionException {
