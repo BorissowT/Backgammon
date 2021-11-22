@@ -5,10 +5,10 @@ import java.util.HashMap;
 public class Dice {
 	private boolean ifDouble = false;
 	private int totalPoints;
-	private int firstDice; //TODO ask: was ist final?
-	private int secondDice;
+	private final int firstDice;
+	private final int secondDice;
 
-	public Dice(int firstDice, int secondDice) {
+	Dice(int firstDice, int secondDice) {
 		this.totalPoints = firstDice +secondDice;
 		if(firstDice == secondDice){
 			this.ifDouble = true;
@@ -18,23 +18,23 @@ public class Dice {
 		this.secondDice = secondDice;
 	}
 
-	public int getTotalPoints() {
+	int getTotalPoints() {
 		return totalPoints;
 	}
 
-	public int getFirstDice() {
+	int getFirstDice() {
 		return firstDice;
 	}
 
-	public int getSecondDice() {
+	int getSecondDice() {
 		return secondDice;
 	}
 
-	public boolean ifDouble() {
+	boolean ifDouble() {
 		return ifDouble;
 	}
 
-	public HashMap<String, Integer> getDiceDictionary(){
+	HashMap<String, Integer> getDiceDictionary(){
 		HashMap<String, Integer> secureDiceDictionary = new HashMap<String, Integer>();
 		secureDiceDictionary.put("total_points", this.getTotalPoints());
 		secureDiceDictionary.put("first_dice", this.getFirstDice());
@@ -43,7 +43,7 @@ public class Dice {
 		return secureDiceDictionary;
 	}
 
-	public void takeOffPoints(int pointsToTakeOff) {
+	void takeOffPoints(int pointsToTakeOff) {
 		this.totalPoints=this.totalPoints-pointsToTakeOff;
 	}
 }

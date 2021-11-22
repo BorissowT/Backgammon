@@ -2,8 +2,8 @@ package backgammon.Implementation;
 
 public class StoneImpl {
 
-    private int id;
-    private Color color;
+    private final int id;
+    private final Color color;
     private PositionImpl position;
 
     StoneImpl(BGImpl GameObject){
@@ -14,21 +14,21 @@ public class StoneImpl {
             this.color = Color.BLACK;
     }
 
-    public void setPosition(PositionImpl position) {
+    void setPosition(PositionImpl position) {
         if(this.position!=null)
             this.position.removeStone(this);
         this.position = position;
     }
 
-    public int getId() {
+    int getId() {
         return id;
     }
 
-    public Color getColor() {
+    Color getColor() {
         return color;
     }
 
-    public int getPositionId() {
+    int getPositionId() {
         return position.getId();
     }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class PositionImpl {
 
     private final int id;
-    private ArrayList<StoneImpl> stones = new ArrayList<StoneImpl>();
+    private final ArrayList<StoneImpl> stones = new ArrayList<StoneImpl>();
     private Color color;
 
     PositionImpl(BGImpl GameObject){
@@ -16,17 +16,17 @@ public class PositionImpl {
         this.color = color.NONE;
     }
 
-    public ArrayList<StoneImpl> getStones() {
+    ArrayList<StoneImpl> getStones() {
         return stones;
     }
 
-    public void setStone(StoneImpl newStone) throws WrongPositionException, NotEnoughPointsException {
+    void setStone(StoneImpl newStone) throws WrongPositionException, NotEnoughPointsException {
         validateColor(newStone);
         this.stones.add(newStone);
         calculateColorOfThePosition();
     }
 
-    private void calculateColorOfThePosition() {
+    void calculateColorOfThePosition() {
        if(this.stones.size()>1){
            this.color = this.stones.get(0).getColor();
        }
@@ -35,21 +35,21 @@ public class PositionImpl {
         }
     }
 
-    private void validateColor(StoneImpl newStone) throws WrongPositionException {
+    void validateColor(StoneImpl newStone) throws WrongPositionException {
         if(this.getColor()!=newStone.getColor() && this.getColor()!=Color.NONE)
             throw new WrongPositionException("Not allowed to move the stone");
     }
 
-    public void removeStone(StoneImpl stone){
+    void removeStone(StoneImpl stone){
         this.stones.remove(stone);
         this.calculateColorOfThePosition();
     }
 
-    public int getId() {
+    int getId() {
         return id;
     }
 
-    public Color getColor() {
+    Color getColor() {
         return color;
     }
 
