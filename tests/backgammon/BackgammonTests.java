@@ -10,12 +10,8 @@ import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BackgammonTests {
-    Backgammon BGobject = makeGameInstance();
-    Color player = BGobject.start();
-    HashMap<String, Integer> points = BGobject.dice();
 
-    public BackgammonTests() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException {
-    }
+    //TODO tests for stones in bar
 
     private boolean ifStartDiceIsBlackOrWhite(Color result){
         if (result == Color.BLACK)
@@ -33,6 +29,8 @@ public class BackgammonTests {
 
     @Test
     public void diceTest() throws WrongPositionException, NotEnoughPointsException, NotAllowedMethodException {
+        Backgammon BGobject = makeGameInstance();
+        BGobject.start();
         for (int i=0; i<10;i++){
             Assert.assertTrue(ifGameDiceInRange(BGobject.dice().get("total_points"))) ;
         }
@@ -40,13 +38,18 @@ public class BackgammonTests {
 
     @Test
     public void startFirstPlayerDiceTest() throws WrongPositionException, NotEnoughPointsException, NotAllowedMethodException {
+        Backgammon BGobject = makeGameInstance();
         for (int i=0; i<10;i++){
             Assert.assertTrue(ifStartDiceIsBlackOrWhite(BGobject.start()));
         }
     }
 
+
     @Test(expected = WrongDirectionException.class)
     public void moveStoneInWrongDirection() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
+        Backgammon BGobject = makeGameInstance();
+        Color player = BGobject.start();
+        HashMap<String, Integer> points = BGobject.dice();
         while(points.get("total_points") != 5){
             BGobject.dice();
             points = BGobject.dice();
@@ -61,6 +64,9 @@ public class BackgammonTests {
 
     @Test(expected = WrongPositionException.class)
     public void moveToEnemyPositionTest() throws WrongPositionException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
+        Backgammon BGobject = makeGameInstance();
+        Color player = BGobject.start();
+        HashMap<String, Integer> points = BGobject.dice();
         while(points.get("total_points") != 5){
             BGobject.dice();
             points = BGobject.dice();
@@ -70,9 +76,12 @@ public class BackgammonTests {
 
     @Test
     public void checkDoubleDiceTest() throws WrongPositionException, NotEnoughPointsException, NotAllowedMethodException {
+        Backgammon BGobject = makeGameInstance();
+        BGobject.start();
         for (int i=0; i<=100;i++){
             HashMap<String, Integer> points = BGobject.dice();
             if(points.get("if_double")==1){
+                //System.out.println(points.getFirst_dice()+" "+points.getSecond_dice()+" "+points.getTotal_points());
                 int double_sum = (points.get("second_dice") + points.get("first_dice"))*2;
                 Assert.assertEquals(double_sum, (int)points.get("total_points"));
             }
@@ -90,6 +99,9 @@ public class BackgammonTests {
 
     @Test(expected = NotEnoughPointsException.class)
     public void notEnoughPointsTest() throws NotEnoughPointsException, WrongPositionException, NotExistingStonePickedException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
+        Backgammon BGobject = makeGameInstance();
+        Color player = BGobject.start();
+        HashMap<String, Integer> points = BGobject.dice();
         while(points.get("total_points") != 6){
             BGobject.dice();
             points = BGobject.dice();
@@ -104,6 +116,9 @@ public class BackgammonTests {
 
     @Test(expected = NotExistingStonePickedException.class)
     public void notExistingStonePickedTest() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
+        Backgammon BGobject = makeGameInstance();
+        Color player = BGobject.start();
+        BGobject.dice();
         for (int i=0; i<=100;i++){
             int stone = ThreadLocalRandom.current().nextInt(-1000, -1);
             if(player == Color.BLACK)
@@ -111,10 +126,14 @@ public class BackgammonTests {
             if(player == Color.WHITE)
                 BGobject.set(stone,1);
         }
+
     }
 
     @Test(expected = NotExistingStonePickedException.class)
     public void notExistingStonePickedTest2() throws NotExistingStonePickedException, NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException, StoneInBarException {
+        Backgammon BGobject = makeGameInstance();
+        Color player = BGobject.start();
+        BGobject.dice();
         for (int i=0; i<=100;i++){
             int stone = ThreadLocalRandom.current().nextInt(30, 1000);
             if(player == Color.BLACK)
@@ -148,6 +167,9 @@ public class BackgammonTests {
 
     @Test()
     public void twoSetsTest() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException, StoneInBarException, NotExistingStonePickedException {
+        Backgammon BGobject = makeGameInstance();
+        Color player = BGobject.start();
+        HashMap<String, Integer> points = BGobject.dice();
         if(player == Color.BLACK){
             while (points.get("first_dice") != 1 || points.get("second_dice") != 1){
                 BGobject.dice();
@@ -180,6 +202,9 @@ public class BackgammonTests {
 
     @Test(expected = StoneInBarException.class)
     public void setStoneWhenBarIsActive() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException, StoneInBarException, NotExistingStonePickedException {
+        Backgammon BGobject = makeGameInstance();
+        Color player = BGobject.start();
+        HashMap<String, Integer> points = BGobject.dice();
         if(player == Color.BLACK){
             while (points.get("first_dice") != 1 || points.get("second_dice") != 1){
                 BGobject.dice();
@@ -222,6 +247,9 @@ public class BackgammonTests {
 
     @Test(expected = NotEnoughPointsException.class)
     public void outOfPointsTest() throws NotEnoughPointsException, WrongPositionException, NotAllowedMethodException, WrongDirectionException, StoneInBarException, NotExistingStonePickedException {
+        Backgammon BGobject = makeGameInstance();
+        Color player = BGobject.start();
+        HashMap<String, Integer> points = BGobject.dice();
         if(player == Color.BLACK){
             while (points.get("first_dice") != 2 || points.get("second_dice") != 2){
                 BGobject.dice();
