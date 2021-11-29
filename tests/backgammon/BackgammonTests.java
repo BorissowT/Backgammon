@@ -11,8 +11,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class BackgammonTests {
 
-    //TODO tests for stones in bar
-
     private boolean ifStartDiceIsBlackOrWhite(Color result){
         if (result == Color.BLACK)
             return true;

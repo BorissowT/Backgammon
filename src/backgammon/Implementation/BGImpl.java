@@ -256,7 +256,10 @@ public class BGImpl implements Backgammon {
     }
 
     @Override
-    public void giveUp() {
+    public void giveUp() throws InterruptedException {
+        System.out.println("closing app...");
+        Thread.sleep(3000);
+        System.exit(1);
     }
 
     public void setPosition(PositionImpl position) {
