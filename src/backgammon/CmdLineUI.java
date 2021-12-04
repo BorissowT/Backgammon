@@ -17,9 +17,10 @@ public class CmdLineUI {
 	public static final String EXIT = "EXIT";
 	public static final String START = "START";
 	public static final String DICE = "DICE";
-	public static final String SET = "SET";
+	public static final String SET = "SET <stone id> <wished position>";
 	private Backgammon BGobject = new BGImpl();;
 	private Color activePlayer;
+	boolean first_round_flag = false;
 
 	public static void main(String[] args) throws IOException, NotEnoughPointsException, WrongPositionException {
 		PrintStream os = System.out;
@@ -65,6 +66,7 @@ public class CmdLineUI {
 						this.activePlayer = BGobject.start();
 						System.out.println("The game started!");
 						System.out.println("THE FIRST PLAYER IS " + this.activePlayer);
+						first_round_flag = true;
 						break;
 					case DICE:
 						HashMap<String, Integer> diceList = this.BGobject.dice();
@@ -76,7 +78,7 @@ public class CmdLineUI {
 								+ " " + diceList.get("second_dice")
 								+ " " + diceList.get("if_double"));
 						break;
-					case SET:
+					case "SET":
 						setStoneInterface(parameterString);
 						break;
 					case "q": // convenience
@@ -126,10 +128,15 @@ public class CmdLineUI {
 
 		System.out.println("processing...");
 		Thread.sleep(1500);
+		System.out.println("done!");
 		this.BGobject.set(Integer.parseInt(stoneId),Integer.parseInt(desiredPositionId));
 	}
 
 	private void changeActivePlayerInterface() {
+		if(this.first_round_flag){
+			first_round_flag = false;
+			return;
+		}
 		if(this.activePlayer == Color.WHITE)
 			this.activePlayer = Color.BLACK;
 		else
