@@ -140,23 +140,28 @@ public class BGImplDistributed extends BGImpl implements ReadThreadListener, TCP
 	/////////////////////////////////////////////////////////////////////////////
 
 	@Override
-	public void recognizedMessage(byte message) {
-		switch(message) {
+	public void recognizedMessage(byte[] messageByte) {
+		byte command = messageByte[0];
+		//System.out.println(command);
+		switch(command) {
 			case START_RESULT_MESSAGE:
-				//this.decrement(false);
-				// debug
 				System.out.println("start message received");
+				System.out.println(messageByte[1]); //COLOR of actual player
 				break;
 			case DICE_RESULT_MESSAGE:
-				//this.increment(false);
+				System.out.println(messageByte[1]); //total_points
+				System.out.println(messageByte[2]); //first_dice
+				System.out.println(messageByte[3]); //second_dice
+				System.out.println(messageByte[4]); //if_double
 				System.out.println("dice message received");
 				break;
 			case SET_RESULT_MESSAGE:
-				//this.increment(false);
 				System.out.println("set message received");
+				System.out.println(messageByte[1]); //stoneId
+				System.out.println(messageByte[2]); //positionId
+				System.out.println(messageByte[3]); //resultStatus
 				break;
 			case GIVE_UP_MESSAGE:
-				//this.increment(false);
 				System.out.println("give up message received");
 				break;
 		}

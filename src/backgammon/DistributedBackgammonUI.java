@@ -1,7 +1,6 @@
 package backgammon;
 
 import backgammon.Exceptions.*;
-import backgammon.Implementation.BGImpl;
 import backgammon.Implementation.BGImplDistributed;
 import backgammon.Implementation.Color;
 import backgammon.Implementation.tcp.TCPStream;
@@ -16,11 +15,10 @@ import java.util.StringTokenizer;
 public class DistributedBackgammonUI {
 	private PrintStream standardOut = System.out;
 	private PrintStream standardError = System.err;
-	public static final String EXIT = "EXIT";
+	public static final String GIVE_UP = "GIVE_UP";
 	public static final String START = "START";
 	public static final String DICE = "DICE";
 	public static final String SET = "SET <stone id> <wished position>";
-	private Backgammon BGobject = new BGImpl();;
 	private Color activePlayer;
 	boolean first_round_flag = false;
 
@@ -77,11 +75,11 @@ public class DistributedBackgammonUI {
 		System.out.println("processing...");
 		Thread.sleep(1500);
 		System.out.println("done!");
-		this.BGobject.set(Integer.parseInt(stoneId),Integer.parseInt(desiredPositionId));
+		this.app.set(Integer.parseInt(stoneId),Integer.parseInt(desiredPositionId));
 	}
 
 	private void stopApp() throws InterruptedException {
-		this.BGobject.giveUp();
+		this.app.giveUp();
 	}
 
 	public void printUsage() {
@@ -100,7 +98,7 @@ public class DistributedBackgammonUI {
 		b.append(SET);
 		b.append("..to dice");
 		b.append("\n");
-		b.append(EXIT);
+		b.append(GIVE_UP);
 		b.append("..to exit");
 
 		this.standardOut.println(b.toString());
@@ -139,14 +137,14 @@ public class DistributedBackgammonUI {
 				// start command loop
 				switch(commandString) {
 					case START:
-						this.activePlayer = BGobject.start();
+						//this.activePlayer = BGobject.start();
+						this.activePlayer = this.app.start();
 						System.out.println("The game started!");
 						System.out.println("THE FIRST PLAYER IS " + this.activePlayer);
 						first_round_flag = true;
-						this.app.start();
 						break;
 					case DICE:
-						HashMap<String, Integer> diceList = this.BGobject.dice();
+						HashMap<String, Integer> diceList = this.app.dice();
 						changeActivePlayerInterface();
 						System.out.println("PLAYER " + this.activePlayer + " diced.");
 						System.out.println("The result: "
@@ -159,7 +157,7 @@ public class DistributedBackgammonUI {
 						setStoneInterface(parameterString);
 						break;
 					case "q": // convenience
-					case EXIT:
+					case GIVE_UP:
 						this.stopApp();
 						again = false; break; // end loop
 
@@ -188,9 +186,7 @@ public class DistributedBackgammonUI {
 			} catch (NotExistingStonePickedException e) {
 				System.err.println("THE PICKED STONE DOESN'T EXIST: \n");
 				System.err.println(e.getLocalizedMessage());
-			} catch (IOException e) {
-				System.err.println(e.getLocalizedMessage());
-			} catch (InterruptedException e) {
+			} catch (IOException | InterruptedException e) {
 				System.err.println(e.getLocalizedMessage());
 			}
 		}
