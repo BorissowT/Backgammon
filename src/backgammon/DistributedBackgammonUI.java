@@ -2,18 +2,20 @@ package backgammon;
 
 import backgammon.Exceptions.*;
 import backgammon.Implementation.BGImpl;
+import backgammon.Implementation.BGImplDistributed;
 import backgammon.Implementation.Color;
+import backgammon.Implementation.tcp.TCPStream;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-
-public class CmdLineUI {
-
+public class DistributedBackgammonUI {
 	private PrintStream standardOut = System.out;
 	private PrintStream standardError = System.err;
-	private BufferedReader userInput;
 	public static final String EXIT = "EXIT";
 	public static final String START = "START";
 	public static final String DICE = "DICE";
@@ -24,20 +26,92 @@ public class CmdLineUI {
 
 	public static final int PORTNUMBER = 7777;
 
-	public static void main(String[] args) throws IOException, NotEnoughPointsException, WrongPositionException {
-		PrintStream os = System.out;
+	public static void main(String args[]) throws IOException, NotEnoughPointsException, WrongPositionException {
+		BGImplDistributed distributedApp = new BGImplDistributed();
+		TCPStream tcpStream;
 
-		os.println("Welcome to Backgammon");
-		CmdLineUI userCmd = new CmdLineUI(os, System.in);
+		if(args.length > 0) {
+			System.out.println("init as TCP client");
+			tcpStream = new TCPStream(PORTNUMBER, false, "Client", distributedApp);
+		} else {
+			System.out.println("init as TCP server");
+			tcpStream = new TCPStream(PORTNUMBER, true, "Server", distributedApp);
+		}
 
-		userCmd.printUsage();
-		userCmd.runCommandLoop();
+		// try to establish connection
+		tcpStream.start();
+
+		// run it
+		new DistributedBackgammonUI(distributedApp).commandLoop();
+
+		// command loop ended - kill it under all circumstances
+		tcpStream.kill();
+
+		System.out.println("connection closed");
 	}
 
-	public void runCommandLoop() {
+	private final Backgammon app;
+
+	private DistributedBackgammonUI(Backgammon app) throws NotEnoughPointsException, WrongPositionException {
+		this.app = app;
+	}
+
+	private void changeActivePlayerInterface() {
+		if(this.first_round_flag){
+			first_round_flag = false;
+			return;
+		}
+		if(this.activePlayer == Color.WHITE)
+			this.activePlayer = Color.BLACK;
+		else
+			this.activePlayer = Color.WHITE;
+	}
+
+	private void setStoneInterface(String parameterString) throws InterruptedException, WrongDirectionException, StoneInBarException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongPositionException {
+		StringTokenizer st = new StringTokenizer(parameterString);
+		String stoneId = st.nextToken();
+		String desiredPositionId = st.nextToken();
+
+		System.out.println("move stone with id: "+stoneId+" to position with id: "+desiredPositionId);
+
+		System.out.println("processing...");
+		Thread.sleep(1500);
+		System.out.println("done!");
+		this.BGobject.set(Integer.parseInt(stoneId),Integer.parseInt(desiredPositionId));
+	}
+
+	private void stopApp() throws InterruptedException {
+		this.BGobject.giveUp();
+	}
+
+	public void printUsage() {
+		StringBuilder b = new StringBuilder();
+
+		b.append("\n");
+		b.append("\n");
+		b.append("valid commands:");
+		b.append("\n");
+		b.append(START);
+		b.append("..to start the game");
+		b.append("\n");
+		b.append(DICE);
+		b.append("..to set a stone");
+		b.append("\n");
+		b.append(SET);
+		b.append("..to dice");
+		b.append("\n");
+		b.append(EXIT);
+		b.append("..to exit");
+
+		this.standardOut.println(b.toString());
+	}
+
+	public void commandLoop() {
 		boolean again = true;
+		BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
 
 		while(again) {
+			this.printUsage();
 			boolean rememberCommand = true;
 			String cmdLineString = null;
 
@@ -69,6 +143,7 @@ public class CmdLineUI {
 						System.out.println("The game started!");
 						System.out.println("THE FIRST PLAYER IS " + this.activePlayer);
 						first_round_flag = true;
+						this.app.start();
 						break;
 					case DICE:
 						HashMap<String, Integer> diceList = this.BGobject.dice();
@@ -95,7 +170,7 @@ public class CmdLineUI {
 				}
 
 			}
-			 catch (NotAllowedMethodException e) {
+			catch (NotAllowedMethodException e) {
 				System.err.println("NOT ALLOWED METHOD: \n");
 				System.err.println(e.getLocalizedMessage());
 			}
@@ -121,58 +196,5 @@ public class CmdLineUI {
 		}
 	}
 
-	private void setStoneInterface(String parameterString) throws InterruptedException, WrongDirectionException, StoneInBarException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongPositionException {
-		StringTokenizer st = new StringTokenizer(parameterString);
-		String stoneId = st.nextToken();
-		String desiredPositionId = st.nextToken();
-
-		System.out.println("move stone with id: "+stoneId+" to position with id: "+desiredPositionId);
-
-		System.out.println("processing...");
-		Thread.sleep(1500);
-		System.out.println("done!");
-		this.BGobject.set(Integer.parseInt(stoneId),Integer.parseInt(desiredPositionId));
-	}
-
-	private void changeActivePlayerInterface() {
-		if(this.first_round_flag){
-			first_round_flag = false;
-			return;
-		}
-		if(this.activePlayer == Color.WHITE)
-			this.activePlayer = Color.BLACK;
-		else
-			this.activePlayer = Color.WHITE;
-	}
-
-	private void stopApp() throws InterruptedException {
-		this.BGobject.giveUp();
-	}
-
-	public CmdLineUI(PrintStream os, InputStream is) throws IOException, NotEnoughPointsException, WrongPositionException {
-		this.standardOut = os;
-		this.userInput = is != null ? new BufferedReader(new InputStreamReader(is)) : null;
-	}
-
-	public void printUsage() {
-		StringBuilder b = new StringBuilder();
-
-		b.append("\n");
-		b.append("\n");
-		b.append("valid commands:");
-		b.append("\n");
-		b.append(START);
-		b.append("..to start the game");
-		b.append("\n");
-		b.append(DICE);
-		b.append("..to set a stone");
-		b.append("\n");
-		b.append(SET);
-		b.append("..to dice");
-		b.append("\n");
-		b.append(EXIT);
-		b.append("..to exit");
-
-		this.standardOut.println(b.toString());
-	}
 }
+

@@ -83,7 +83,6 @@ public class BGImpl implements Backgammon {
 
     @Override
     public Color start() {
-        //TODO ask: wie wäre es am besten hier
         int start = ThreadLocalRandom.current().nextInt(1, 3);
         try{
             switch (start) {
