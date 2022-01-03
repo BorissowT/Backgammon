@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 
-public class BGImplDistributed extends BGImpl implements ReadThreadListener, TCPStreamCreatedListener {
+public class BGImplDistributed extends BGImpl implements TCPStreamCreatedListener, ReadThreadListener {
 
 	private InputStream is;
 	private OutputStream os;
@@ -139,38 +139,7 @@ public class BGImplDistributed extends BGImpl implements ReadThreadListener, TCP
 	//                             ReadThreadListener                          //
 	/////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public void recognizedMessage(byte[] messageByte) {
-		byte command = messageByte[0];
-		//System.out.println(command);
-		switch(command) {
-			case START_RESULT_MESSAGE:
-				System.out.println("start message received");
-				System.out.println(messageByte[1]); //COLOR of actual player
-				break;
-			case DICE_RESULT_MESSAGE:
-				System.out.println(messageByte[1]); //total_points
-				System.out.println(messageByte[2]); //first_dice
-				System.out.println(messageByte[3]); //second_dice
-				System.out.println(messageByte[4]); //if_double
-				System.out.println("dice message received");
-				break;
-			case SET_RESULT_MESSAGE:
-				System.out.println("set message received");
-				System.out.println(messageByte[1]); //stoneId
-				System.out.println(messageByte[2]); //positionId
-				System.out.println(messageByte[3]); //resultStatus
-				break;
-			case GIVE_UP_MESSAGE:
-				System.out.println("give up message received");
-				break;
-		}
-	}
 
-	@Override
-	public void connectionClosed() {
-		this.is = null; this.os = null;
-	}
 
 	@Override
 	public void streamCreated(TCPStream channel) {
@@ -184,6 +153,51 @@ public class BGImplDistributed extends BGImpl implements ReadThreadListener, TCP
 		} catch (IOException e) {
 			System.err.println("fatal: " + e.getLocalizedMessage());
 			System.exit(1);
+		}
+	}
+
+	@Override
+	public void connectionClosed() {
+		this.is = null; this.os = null;
+	}
+
+	@Override
+	public void recognizedMessage(byte[] messageByte) throws WrongDirectionException, StoneInBarException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongPositionException {
+		this.changeConditionFromList(messageByte);
+	}
+
+	public void changeConditionFromList(byte[] messageByte) throws WrongDirectionException, StoneInBarException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongPositionException {
+		byte command = messageByte[0];
+		switch(command) {
+			case START_RESULT_MESSAGE:
+				System.out.println("start message received");
+				//COLOR of actual player
+				System.out.println(messageByte[1]);
+				this.tcpChangeActivePlayer(messageByte[1]);
+				System.out.println("actual player is:"+this.getActivePlayer());
+				break;
+			case DICE_RESULT_MESSAGE:
+				System.out.println("dice message received");
+				System.out.println(messageByte[1]); //total_points
+				System.out.println(messageByte[2]); //first_dice
+				System.out.println(messageByte[3]); //second_dice
+				System.out.println(messageByte[4]); //if_double
+				this.tcpChangePoints(new Dice(messageByte[2], messageByte[3]));
+				break;
+			case SET_RESULT_MESSAGE:
+				System.out.println("set message received");
+				System.out.println(messageByte[1]); //stoneId
+				System.out.println(messageByte[2]); //positionId
+				System.out.println(messageByte[3]); //resultStatus
+				boolean setStatusResult = set(false, messageByte[1], messageByte[2]);
+				if (setStatusResult == (boolean) (messageByte[3] != 0))
+					System.out.println("set request is successful");
+				else
+					System.out.println("set request failed!");
+				break;
+			case GIVE_UP_MESSAGE:
+				System.out.println("give up message received");
+				break;
 		}
 	}
 

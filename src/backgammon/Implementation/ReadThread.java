@@ -1,5 +1,7 @@
 package backgammon.Implementation;
 
+import backgammon.Exceptions.*;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,10 +28,22 @@ public class ReadThread extends Thread{
 		} catch (IOException e) {
 			System.err.println("connection broken: " + e.getLocalizedMessage());
 			this.listener.connectionClosed();
+		} catch (WrongDirectionException e) {
+			e.printStackTrace();
+		} catch (StoneInBarException e) {
+			e.printStackTrace();
+		} catch (NotEnoughPointsException e) {
+			e.printStackTrace();
+		} catch (NotExistingStonePickedException e) {
+			e.printStackTrace();
+		} catch (NotAllowedMethodException e) {
+			e.printStackTrace();
+		} catch (WrongPositionException e) {
+			e.printStackTrace();
 		}
 	}
 
-	private void recogniseTheArgument(int readInt) throws IOException {
+	private void recogniseTheArgument(int readInt) throws IOException, WrongDirectionException, StoneInBarException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongPositionException {
 		byte command = (byte) readInt;
 		readInt = this.is.read();
 		byte [] messageByte = new byte[5];

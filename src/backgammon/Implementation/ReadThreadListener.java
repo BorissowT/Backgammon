@@ -1,5 +1,7 @@
 package backgammon.Implementation;
 
+import backgammon.Exceptions.*;
+
 public interface ReadThreadListener {
 	byte START_RESULT_MESSAGE = 10; // arg: 1 if white 2 if black
 	byte DICE_RESULT_MESSAGE = 11;
@@ -10,7 +12,7 @@ public interface ReadThreadListener {
 	 * Tell listener message received
 	 * @param message
 	 */
-	void recognizedMessage(byte[]  message);
+	void recognizedMessage(byte[]  message) throws WrongDirectionException, StoneInBarException, NotEnoughPointsException, NotExistingStonePickedException, NotAllowedMethodException, WrongPositionException;
 
 	/**
 	 * Tell listener: connection closed

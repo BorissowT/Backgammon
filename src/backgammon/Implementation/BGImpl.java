@@ -9,8 +9,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BGImpl implements Backgammon {
     private HashMap<Integer, StoneImpl> allStones =  new HashMap<Integer, StoneImpl>();
     private HashMap<Integer, PositionImpl> allPositions = new HashMap<Integer, PositionImpl>();
-    //private HashMap<Integer, StoneImpl> barBLACK = new HashMap<Integer, StoneImpl>();
-    //private HashMap<Integer, StoneImpl> barWHITE = new HashMap<Integer, StoneImpl>();
     private Color active_player = Color.NONE;
     private Dice points = null;
 
@@ -290,5 +288,17 @@ public class BGImpl implements Backgammon {
         if (active_player == Color.BLACK)
             return Color.BLACK;
         return Color.WHITE;
+    }
+
+    public void tcpChangeActivePlayer(byte message){
+        if(message==1)
+            this.active_player = Color.WHITE;
+        else
+            this.active_player = Color.BLACK;
+    }
+
+    public void tcpChangePoints(Dice points){
+        this.points = points;
+        changeActivePlayer();
     }
 }
